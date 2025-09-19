@@ -19,17 +19,11 @@ model User {
   firstName String
   lastName  String
   password  String
-  status    Boolean @default(true)
   email     String  @unique
-  role      Role    @default(USER)
+  is_admin  Boolean @default(false)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("user")
-}
-
-enum Role {
-  USER
-  ADMIN
 }

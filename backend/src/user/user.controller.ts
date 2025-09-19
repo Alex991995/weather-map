@@ -20,7 +20,6 @@ export class UserController {
       validateDTO(CreateUserScheme),
       async (req: Request<object, object, UserDTO>, res: Response, next: NextFunction) => {
         const body = req.body;
-
         const result = await this.userService.createUser(body);
         if (result) {
           res.send(result);
@@ -31,7 +30,7 @@ export class UserController {
       },
     );
 
-    this.router.get('', validateAdmin(), async (req, res) => {
+    this.router.get('', async (req, res) => {
       const result = await this.userService.getAllUsers();
 
       res.send(result);
@@ -40,13 +39,6 @@ export class UserController {
     this.router.get('/:id', validateAdminOrUser(), async (req, res) => {
       const id = req.params.id;
       const result = await this.userService.getUserByID(id);
-
-      res.send(result);
-    });
-
-    this.router.put('/:id', validateAdminOrUser(), async (req, res) => {
-      const user = req.user;
-      const result = await this.userService.updateUserStatus(user);
 
       res.send(result);
     });

@@ -1,0 +1,13 @@
+<div class="box-input my-3">
+  <input
+    class="form-control"
+    list="crypto"
+    placeholder="Type to search..."
+    [(ngModel)]="value"
+  />
+  <datalist id="crypto">
+    @for (city of cities(); track $index) {
+    <option [value]="city">{{ city }}</option>
+    }
+  </datalist>
+</div>

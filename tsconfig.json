@@ -31,6 +31,9 @@
       "@services/*": [
         "app/core/services/*"
       ],
+      "@interceptors/*": [
+        "app/core/interceptors/*"
+      ],
       "@interface/*": [
         "app/shared/interface/*"
       ],

@@ -1,4 +1,3 @@
-import { Role } from '@/generated/prisma/index.js';
 import { z } from 'zod';
 
 export const CreateUserScheme = z

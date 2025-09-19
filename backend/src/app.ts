@@ -7,6 +7,7 @@ import { ExceptionFilter } from './errors/exception.filter.js';
 import { AuthController } from './auth/auth.controller.js';
 import { AuthMiddleware } from './middlewares/auth.middleware.js';
 import { AuthService } from './auth/auth.service.js';
+import cors from 'cors';
 
 // Health check endpoint
 
@@ -28,6 +29,7 @@ export class App {
 
   useMiddleware() {
     this.app.use(body.json());
+    this.app.use(cors());
     this.app.use(this.authMiddleware.execute.bind(this.authMiddleware));
   }
 
