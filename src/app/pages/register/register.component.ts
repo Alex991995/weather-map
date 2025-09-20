@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal, DestroyRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
-import { IUserBody } from 'app/shared/interfaces';
+import { ErrorResponse, IUserBody } from 'app/shared/interfaces';
+import { equalPasswords } from './helpers/equal-passwords';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-register',
@@ -10,16 +12,12 @@ import { IUserBody } from 'app/shared/interfaces';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   private _formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
   private router = inject(Router);
-  apiService = inject(ApiService);
-
-  //  firstName: string;
-  // lastName: string;
-  // password: string;
-  // email: string;
-  // role?: boolean;
+  private apiService = inject(ApiService);
+  protected errorMessage = signal('');
 
   protected form = this._formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -39,37 +37,53 @@ export class RegisterComponent implements OnInit {
         Validators.pattern('^[a-zA-Z0-9]+$'),
       ],
     ],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.pattern('^[a-zA-Z0-9]+$'),
-      ],
-    ],
+    passwords: this._formBuilder.nonNullable.group(
+      {
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.pattern('^[a-zA-Z0-9]+$'),
+          ],
+        ],
+        repeatPassword: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.pattern('^[a-zA-Z0-9]+$'),
+          ],
+        ],
+      },
+      { validators: [equalPasswords] }
+    ),
   });
 
-  ngOnInit(): void {
-    //   this.apiService.createUser().subscribe((res) => {
-    //     console.log(res);
-    //   });
-  }
-
   submitEvent() {
-    const isAdmin = this.form.value.email?.includes('admin');
+    const isAdmin = this.form.value.email?.includes('admin') ? true : false;
     const valid = this.form.valid;
     if (valid) {
       const body: IUserBody = {
         firstName: this.form.value.firstName!,
         lastName: this.form.value.lastName!,
-        password: this.form.value.password!,
+        password: this.form.value.passwords?.password!,
         email: this.form.value.email!,
         is_admin: isAdmin,
       };
 
-      this.apiService.createUser(body).subscribe((res) => {
-        console.log(res.id);
-      });
+      this.apiService
+        .createUser(body)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          complete: () => {
+            this.router.navigateByUrl('/login');
+          },
+          error: (err: ErrorResponse) => {
+            this.form.setErrors({ message: err.error });
+            this.errorMessage.set(err.error);
+          },
+        });
     }
   }
 
@@ -81,11 +95,18 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  get isDisable() {
+    return this.form.invalid;
+  }
+
   get isValidPassword() {
+    const password = this.form.controls.passwords.controls.password;
+    return password.touched && password.dirty && password.invalid;
+  }
+  get isValidRepeatPassword() {
+    const repeatPassword = this.form.controls.passwords.controls.repeatPassword;
     return (
-      this.form.controls.password.touched &&
-      this.form.controls.password.dirty &&
-      this.form.controls.password.invalid
+      repeatPassword.touched && repeatPassword.dirty && repeatPassword.invalid
     );
   }
 

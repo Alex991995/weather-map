@@ -25,6 +25,7 @@ export class UserController {
           res.send(result);
           return;
         } else {
+          console.log('ddddddddddd');
           next(new HttpError(422, 'User already exists'));
         }
       },

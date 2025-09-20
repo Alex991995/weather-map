@@ -40,22 +40,46 @@
         @if(isValidLastName){should be more than one symbol}
       </div>
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input
-        formControlName="password"
-        type="password"
-        class="form-control"
-        id="password"
-        aria-describedby="password"
-      />
+    <div formGroupName="passwords">
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          formControlName="password"
+          type="password"
+          class="form-control"
+          id="password"
+          aria-describedby="password"
+        />
 
-      <div id="name" class="form-text error-message text-danger">
-        @if(isValidPassword){should be more than one symbol}
+        <div id="name" class="form-text error-message text-danger">
+          @if(isValidPassword){should be equal}
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Repeat Password</label>
+        <input
+          formControlName="repeatPassword"
+          type="password"
+          class="form-control"
+          id="repeatPassword"
+          aria-describedby="repeatPassword"
+        />
+
+        <div id="name" class="form-text error-message text-danger">
+          @if(isValidRepeatPassword){should be equal}
+        </div>
       </div>
     </div>
-    <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="d-flex justify-content-between">
+      <div class="form-text error-message text-danger">
+        @if(errorMessage()){
+        {{ errorMessage() }}
+        }
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isDisable">
+        Submit
+      </button>
     </div>
   </form>
 </section>

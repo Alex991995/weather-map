@@ -30,7 +30,7 @@ export class App {
   useMiddleware() {
     this.app.use(body.json());
     this.app.use(cors());
-    this.app.use(this.authMiddleware.execute.bind(this.authMiddleware));
+    // this.app.use(this.authMiddleware.execute.bind(this.authMiddleware));
   }
 
   useExceptionFilters() {
