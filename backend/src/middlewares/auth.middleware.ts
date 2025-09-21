@@ -9,6 +9,7 @@ export class AuthMiddleware {
     const token = req.headers.authorization?.split(' ')[1];
 
     const route = req.originalUrl;
+    console.log(req.headers);
 
     if (token) {
       try {

@@ -1,1 +1,43 @@
-<p>login works!</p>
+<section class="container h-100 d-flex flex-column justify-content-center">
+  <form [formGroup]="form" (submit)="submitEvent()" class="d-flex flex-column">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        id="email"
+      />
+      <div id="email" class="form-text error-message text-danger">
+        @if(isValidEmail){invalid email}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="password"
+        aria-describedby="password"
+      />
+
+      <div id="name" class="form-text error-message text-danger">
+        @if(isValidPassword){should be equal}
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <div class="form-text error-message text-danger">
+        @if(errorMessage()){
+        {{ errorMessage() }}
+        }
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isDisable">
+        Submit
+      </button>
+    </div>
+  </form>
+</section>

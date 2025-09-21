@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { IUserBody, IUserCreateResult } from 'app/shared/interfaces';
+import {
+  IUserBody,
+  IUserCreateResult,
+  IUserLoginCredential,
+} from 'app/shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  weatherURL = 'https://api.openweathermap.org/data/3';
-  authURL = 'http://localhost:3000';
-  http = inject(HttpClient);
+  private weatherURL = 'https://api.openweathermap.org/data/3';
+  private authURL = 'http://localhost:3000';
+  private http = inject(HttpClient);
 
   fetchByCityName(name: string) {
     return this.http.get(`${this.weatherURL}/find?q=${name}`);
@@ -19,5 +23,16 @@ export class ApiService {
       `${this.authURL}/user/create`,
       body
     );
+  }
+
+  loginUser(body: IUserLoginCredential) {
+    return this.http.post(`${this.authURL}/auth/login`, body, {
+      withCredentials: true,
+    });
+  }
+  getUser() {
+    return this.http.get(`${this.authURL}/user`, {
+      withCredentials: true,
+    });
   }
 }

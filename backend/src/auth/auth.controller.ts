@@ -20,9 +20,10 @@ export class AuthController {
       async ({ body }: Request<object, object, LoginDTO>, res: Response, next: NextFunction) => {
         const access_token = await this.authService.loginUser(body);
         if (access_token) {
-          res.send({ access_token });
+          res.cookie('access_token', access_token).send({ isAuthenticated: true });
           return;
         }
+
         next(new HttpError(401, 'Wrong credential'));
       },
     );
