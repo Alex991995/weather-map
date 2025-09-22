@@ -4,6 +4,7 @@ import {
   IUserBody,
   IUserCreateResult,
   IUserLoginCredential,
+  IWeatherInfo,
 } from 'app/shared/interfaces';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ApiService {
   private http = inject(HttpClient);
 
   fetchByCityName(name: string) {
-    return this.http.get(`${this.weatherURL}/find?q=${name}`);
+    return this.http.get<IWeatherInfo[]>(`${this.weatherURL}/find?q=${name}`);
   }
 
   createUser(body: IUserBody) {

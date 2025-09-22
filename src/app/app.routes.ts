@@ -12,6 +12,13 @@ export const routes: Routes = [
         component: DashboardComponent,
       },
       {
+        path: 'city/:slug',
+        loadComponent: () =>
+          import('@pages/detail-city/detail-city.component').then(
+            (m) => m.DetailCityComponent
+          ),
+      },
+      {
         path: 'register',
         loadComponent: () =>
           import('@pages/register/register.component').then(
