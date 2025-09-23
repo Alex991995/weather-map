@@ -1,1 +1,23 @@
-<p>{{ slug() }}</p>
+<section class="container">
+  <div>
+    <div class="d-flex align-items-center">
+      <h3>Current weather in {{ weatherInfo()?.name }}</h3>
+      <img [src]="iconWeather()" alt="" />
+    </div>
+    <p>
+      {{ weatherCity()?.description }}
+      {{ weatherInfo()?.temp | convertTemp | number }} &deg;C
+    </p>
+    <div>
+      <h4>Humidity</h4>
+      <span> {{ weatherInfo()?.humidity }} %</span>
+
+      <h4>Pressure</h4>
+      <span> {{ weatherInfo()?.pressure }} </span>
+
+      <h4>Wind</h4>
+      <span> {{ weatherInfo()?.wind?.speed }} k/m</span>
+    </div>
+  </div>
+  <app-charts-weather [forecastData]="forecastData" />
+</section>
