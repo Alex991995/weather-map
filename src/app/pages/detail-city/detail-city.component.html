@@ -1,13 +1,11 @@
 <section class="container">
-  <div>
+  <div class="wrapper">
     <div class="d-flex align-items-center">
       <h3>Current weather in {{ weatherInfo()?.name }}</h3>
       <img [src]="iconWeather()" alt="" />
+      <h3>{{ weatherCity()?.main }}</h3>
     </div>
-    <p>
-      {{ weatherCity()?.description }}
-      {{ weatherInfo()?.temp | convertTemp | number }} &deg;C
-    </p>
+    <h3>{{ weatherInfo()?.temp | convertTemp | number : "1.0-0" }} &deg;C</h3>
     <div>
       <h4>Humidity</h4>
       <span> {{ weatherInfo()?.humidity }} %</span>
@@ -19,5 +17,7 @@
       <span> {{ weatherInfo()?.wind?.speed }} k/m</span>
     </div>
   </div>
-  <app-charts-weather [forecastData]="forecastData" />
+  <app-charts-weather [forecastData]="forecastData()" />
+
+  <app-cards-forecast [forecastFor5Days]="forecastFor5Days()" />
 </section>

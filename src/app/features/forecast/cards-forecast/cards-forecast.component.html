@@ -1,0 +1,19 @@
+<div class="wrapper">
+  @if(forecastFor5Days()) { @for (day of forecastFor5Days(); track $index) {
+  <div class="card mb-3 shadow-sm text-bg-info">
+    <div class="card-body text-center">
+      <h5 class="card-title">{{ day.date | date : "EEEE" }}</h5>
+      <img
+        [src]="'https://openweathermap.org/img/wn/' + day.icon + '@2x.png'"
+        alt="Weather icon"
+      />
+      <p class="card-text">
+        {{ day.warmest | convertTemp | number : "1.0-0" }}°C /
+
+        {{ day.coldest || 0 | convertTemp | number : "1.0-0" }}°C
+      </p>
+      <p class="text-muted">{{ day.description }}</p>
+    </div>
+  </div>
+  } }
+</div>

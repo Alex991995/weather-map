@@ -6,7 +6,7 @@ export interface IForecastData {
   city: City;
 }
 
-interface List {
+export interface List {
   dt: number;
   main: Main;
   weather: Weather[];

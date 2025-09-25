@@ -30,6 +30,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@pages/login/login.component').then((m) => m.LoginComponent),
       },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('@pages/settings/settings.component').then(
+            (m) => m.SettingsComponent
+          ),
+      },
     ],
   },
 ];

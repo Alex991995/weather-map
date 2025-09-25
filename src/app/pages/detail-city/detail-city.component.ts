@@ -10,12 +10,24 @@ import {
 } from '@angular/core';
 import { ApiService } from '@core/services/api.service';
 import { ConvertTempPipe } from 'app/shared/pipes/convert-temp.pipe';
-import { IForecastData, IWeatherInfo, Weather } from 'app/shared/interfaces';
+import {
+  IForecastData,
+  IForecastFor5Days,
+  IWeatherInfo,
+  Weather,
+} from 'app/shared/interfaces';
 import { ChartsWeatherComponent } from 'app/features/charts/charts-weather/charts-weather.component';
+import { CardsForecastComponent } from 'app/features/forecast/cards-forecast/cards-forecast.component';
+import { buildForecast } from './helper/build-forecast';
 
 @Component({
   selector: 'app-detail-city',
-  imports: [ConvertTempPipe, DecimalPipe, ChartsWeatherComponent],
+  imports: [
+    ConvertTempPipe,
+    DecimalPipe,
+    ChartsWeatherComponent,
+    CardsForecastComponent,
+  ],
   templateUrl: './detail-city.component.html',
   styleUrl: './detail-city.component.scss',
 })
@@ -24,10 +36,10 @@ export class DetailCityComponent implements OnInit {
   protected weatherInfo = signal<IWeatherInfo | undefined>(undefined);
   protected weatherCity = signal<Weather | undefined>(undefined);
   protected slug = input('');
+  protected iconWeather = signal('');
 
-  forecastData = computed(() => this.apiService.fetchForecastCity(this.slug()));
-
-  iconWeather = signal('');
+  forecastFor5Days = signal<IForecastFor5Days[] | undefined>(undefined);
+  forecastData = signal<IForecastData | undefined>(undefined);
 
   constructor() {
     effect(() => {
@@ -43,7 +55,6 @@ export class DetailCityComponent implements OnInit {
     });
   }
 
-  // charts weather
   ngOnInit() {
     this.apiService.fetchByCityName(this.slug()).subscribe({
       next: (res) => {
@@ -52,27 +63,12 @@ export class DetailCityComponent implements OnInit {
       },
     });
 
-    // this.apiService.fetchForecastCity(this.slug()).subscribe({
-    //   next: (res) => {
-    //     this.forecastData.set(res);
-    //     console.log(this.forecastData());
-    //   },
-    // });
-
-    // this.apiService
-    //   .getIconWeather(this.weatherCity()!.icon)
-    //   .subscribe((res) => {
-    //     console.log(res);
-    //   });
+    this.apiService.fetchForecastCity(this.slug()).subscribe((res) => {
+      if (res) {
+        const forecastFor5Days = buildForecast(res);
+        this.forecastFor5Days.set(forecastFor5Days);
+      }
+      this.forecastData.set(res);
+    });
   }
 }
-
-// name (название города)
-// country (страна)
-// weather[0].main и weather[0].description (состояние: "Mist / туман")
-// weather[0].icon (иконка погоды)
-// temp, temp_min, temp_max (температуры, но лучше сразу переводить из Кельвинов в °C)
-// humidity (влажность)
-// pressure (давление)
-// wind.speed, wind.deg (ветер)
-// clouds.all (облачность)

@@ -31,7 +31,6 @@ export class ApiService {
 
   getIconWeather(icon: string) {
     const url = 'http://openweathermap.org/img/wn';
-    //  https://openweathermap.org/img/wn/10d@2x.png
     return this.http.get(`${url}/${icon}@2x.png`, { responseType: 'blob' });
   }
 
@@ -45,7 +44,6 @@ export class ApiService {
     return this.http.get<IForecastData>(
       `${this.weatherURL}/data/2.5/forecast?q=${city}`
     );
-    // api.openweathermap.org/data/2.5/forecast?q={city name}
   }
 
   getUser() {
