@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { UserDTO } from './dto/user.dto.js';
+import { IidCity, UserDTO } from './dto/user.dto.js';
 import { UserService } from './user.service.js';
 import { HttpError } from '@/errors/http-error.js';
 import { validateDTO } from '@/middlewares/validateDTO.middleware.js';
@@ -25,9 +25,29 @@ export class UserController {
           res.send(result);
           return;
         } else {
-          console.log('ddddddddddd');
           next(new HttpError(422, 'User already exists'));
         }
+      },
+    );
+
+    this.router.post(
+      '/favorite',
+      async (req: Request<object, object, IidCity>, res: Response, next: NextFunction) => {
+        const id_city = req.body.id;
+        const userId = req.user.id;
+
+        const result = await this.userService.addIDCity(userId, id_city);
+        res.send({ result });
+      },
+    );
+
+    this.router.get(
+      '/favorite',
+      async (req: Request<object, object, IidCity>, res: Response, next: NextFunction) => {
+        const userId = req.user.id;
+
+        const result = await this.userService.getAllFavCityIDUser(userId);
+        res.send(result);
       },
     );
 

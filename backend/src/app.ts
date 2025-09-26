@@ -8,6 +8,7 @@ import { AuthController } from './auth/auth.controller.js';
 import { AuthMiddleware } from './middlewares/auth.middleware.js';
 import { AuthService } from './auth/auth.service.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // Health check endpoint
 
@@ -29,6 +30,7 @@ export class App {
 
   useMiddleware() {
     this.app.use(body.json());
+    this.app.use(cookieParser());
     this.app.use(
       cors({
         origin: 'http://localhost:4200',

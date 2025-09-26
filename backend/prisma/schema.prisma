@@ -25,5 +25,14 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("user")
+  favoriteCities IDFavoriteCity[]
+}
+
+model IDFavoriteCity {
+  id_city Int
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+
+  @@id([userId, id_city])
+  @@map("id_favorite_cities")
 }

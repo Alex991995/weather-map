@@ -8,9 +8,14 @@
         alt="Weather icon"
       />
       <p class="card-text">
-        {{ day.warmest | convertTemp | number : "1.0-0" }}°C /
+        {{ day.warmest | convertTemp }} /
+        {{ day.coldest || 0 | convertTemp }}
+      </p>
+      <p>💧 Humidity: {{ day.humidity }}%</p>
+      <p>Pressure: {{ day.pressure }} hPa</p>
 
-        {{ day.coldest || 0 | convertTemp | number : "1.0-0" }}°C
+      <p>
+        🌧️ Precipitation chance: {{ day.precipitation | number : "1.0-0" }}%
       </p>
       <p class="text-muted">{{ day.description }}</p>
     </div>

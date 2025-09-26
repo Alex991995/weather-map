@@ -1,11 +1,21 @@
 <section class="container">
   <div class="wrapper">
-    <div class="d-flex align-items-center">
-      <h3>Current weather in {{ weatherInfo()?.name }}</h3>
-      <img [src]="iconWeather()" alt="" />
-      <h3>{{ weatherCity()?.main }}</h3>
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <h3>Current weather in {{ weatherInfo()?.name }}</h3>
+        <img [src]="iconWeather()" alt="" />
+        <h3>{{ weatherCity()?.main }}</h3>
+      </div>
+      <div>
+        <button
+          class="btn btn-outline-primary"
+          (click)="clickEventAddToFavorite(weatherInfo()!.id)"
+        >
+          add to fav
+        </button>
+      </div>
     </div>
-    <h3>{{ weatherInfo()?.temp | convertTemp | number : "1.0-0" }} &deg;C</h3>
+    <h3>{{ weatherInfo()?.temp | convertTemp }}</h3>
     <div>
       <h4>Humidity</h4>
       <span> {{ weatherInfo()?.humidity }} %</span>

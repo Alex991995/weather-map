@@ -6,15 +6,14 @@ export class AuthMiddleware {
   constructor(private authService: AuthService) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization?.split(' ')[1];
-
+    const token = req.cookies.access_token as string | undefined;
     const route = req.originalUrl;
-    console.log(req.headers);
 
     if (token) {
       try {
         const payload = await this.authService.verifyToken(token);
         const user = await this.authService.findUser(payload.email);
+        // console.log(user);
         if (user) {
           req.user = user;
         }

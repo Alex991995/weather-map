@@ -5,14 +5,6 @@ import { User } from '@/generated/prisma/client.js';
 
 const salt = process.env.SALT!;
 
-// {
-//     "id": "cd59c25f-e4a3-4232-a2c0-0c4b40ea1e4b",
-//     "firstName": "ALIAKSANDR",
-//     "lastName": "KISEL",
-//     "email": "sasheadmin.1995@gmail.com",
-//     "is_admin": true,
-// }
-
 export class UserService {
   constructor(private prismaService: PrismaService) {}
 
@@ -35,6 +27,34 @@ export class UserService {
       console.log(error);
       return false;
     }
+  }
+
+  async addIDCity(userId: string, id_city: number) {
+    try {
+      const res = await this.prismaService.client.iDFavoriteCity.create({
+        data: { id_city, userId },
+      });
+      return 'add city';
+    } catch (error) {
+      const res = await this.prismaService.client.iDFavoriteCity.delete({
+        where: {
+          userId_id_city: {
+            id_city,
+            userId,
+          },
+        },
+      });
+      return 'delete city';
+    }
+  }
+  getAllFavCityIDUser(userId: string) {
+    return this.prismaService.client.user.findUnique({
+      where: { id: userId },
+      select: {
+        favoriteCities: true,
+        is_admin: true,
+      },
+    });
   }
 
   async getAllUsers() {

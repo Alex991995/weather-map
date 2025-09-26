@@ -1,0 +1,23 @@
+<h3>{{ title() }}</h3>
+<div class="wrapper">
+  @if(weatherData()) { @for (city of weatherData(); track $index) {
+  <div class="card mb-3 shadow-sm text-bg-info">
+    <div class="card-body text-center">
+      <h5 class="card-title">{{ city.name }}</h5>
+      <img
+        [src]="
+          'https://openweathermap.org/img/wn/' +
+          city.weather[0].icon +
+          '@2x.png'
+        "
+        alt="Weather icon"
+      />
+      <p class="card-text">{{ city.main.temp | convertTemp }} /</p>
+      <p>💧 Humidity: {{ city.main.humidity }}%</p>
+      <p>Pressure: {{ city.main.pressure }} hPa</p>
+
+      <p class="text-muted">{{ city.weather[0].description }}</p>
+    </div>
+  </div>
+  } }
+</div>

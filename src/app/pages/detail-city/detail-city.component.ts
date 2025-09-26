@@ -12,7 +12,7 @@ import { ApiService } from '@core/services/api.service';
 import { ConvertTempPipe } from 'app/shared/pipes/convert-temp.pipe';
 import {
   IForecastData,
-  IForecastFor5Days,
+  IForecastForCard,
   IWeatherInfo,
   Weather,
 } from 'app/shared/interfaces';
@@ -22,12 +22,7 @@ import { buildForecast } from './helper/build-forecast';
 
 @Component({
   selector: 'app-detail-city',
-  imports: [
-    ConvertTempPipe,
-    DecimalPipe,
-    ChartsWeatherComponent,
-    CardsForecastComponent,
-  ],
+  imports: [ConvertTempPipe, ChartsWeatherComponent, CardsForecastComponent],
   templateUrl: './detail-city.component.html',
   styleUrl: './detail-city.component.scss',
 })
@@ -38,7 +33,7 @@ export class DetailCityComponent implements OnInit {
   protected slug = input('');
   protected iconWeather = signal('');
 
-  forecastFor5Days = signal<IForecastFor5Days[] | undefined>(undefined);
+  forecastFor5Days = signal<IForecastForCard[] | undefined>(undefined);
   forecastData = signal<IForecastData | undefined>(undefined);
 
   constructor() {
@@ -58,6 +53,20 @@ export class DetailCityComponent implements OnInit {
   ngOnInit() {
     this.apiService.fetchByCityName(this.slug()).subscribe({
       next: (res) => {
+        const data = res[0];
+        console.log(data);
+
+        // const body: IForecastForCard = {
+        // name:data.name
+        //   date: ,
+        //   warmest: n.main.temp,
+        //   coldest: null,
+        //   icon: n.weather[0].icon,
+        //   description: n.weather[0].description,
+        //   precipitation: n.pop,
+        //   humidity: n.main.humidity,
+        //   pressure: n.main.pressure,
+        // };
         this.weatherInfo.set(res[0]);
         this.weatherCity.set(res[0].weather[0]);
       },
@@ -69,6 +78,18 @@ export class DetailCityComponent implements OnInit {
         this.forecastFor5Days.set(forecastFor5Days);
       }
       this.forecastData.set(res);
+    });
+    this.apiService.getSetOfCitiesForecast().subscribe((res) => {
+      // console.log(res);
+    });
+    this.apiService.getAllFavCityIDUser().subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  clickEventAddToFavorite(id: number) {
+    this.apiService.addFavoriteCityByID(id).subscribe((res) => {
+      console.log(res);
     });
   }
 }

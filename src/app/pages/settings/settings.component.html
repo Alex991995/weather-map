@@ -1,3 +1,16 @@
 <section class="container">
   <app-toggle-theme />
+  <div>
+    <label for=""> Temperature measurement </label>
+
+    <select
+      class="form-select w-25"
+      [(ngModel)]="selectedValue"
+      (change)="changeEventSelector()"
+    >
+      @for (temp of arrayTempMeasure(); track $index) {
+      <option [value]="temp">&deg;{{ temp }}</option>
+      }
+    </select>
+  </div>
 </section>

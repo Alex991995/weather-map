@@ -5,3 +5,7 @@ export interface UserDTO {
   email: string;
   role?: boolean;
 }
+
+export interface IidCity {
+  id: number;
+}
