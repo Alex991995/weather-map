@@ -37,7 +37,7 @@ export class UserController {
         const userId = req.user.id;
 
         const result = await this.userService.addIDCity(userId, id_city);
-        res.send({ result });
+        res.send({ is_added: result });
       },
     );
 
@@ -47,6 +47,14 @@ export class UserController {
         const userId = req.user.id;
 
         const result = await this.userService.getAllFavCityIDUser(userId);
+        res.send(result);
+      },
+    );
+
+    this.router.get(
+      '/popular',
+      async (req: Request<object, object, IidCity>, res: Response, next: NextFunction) => {
+        const result = await this.userService.getPopularIDCityByAdmin();
         res.send(result);
       },
     );

@@ -34,7 +34,7 @@ export class UserService {
       const res = await this.prismaService.client.iDFavoriteCity.create({
         data: { id_city, userId },
       });
-      return 'add city';
+      return true;
     } catch (error) {
       const res = await this.prismaService.client.iDFavoriteCity.delete({
         where: {
@@ -44,12 +44,22 @@ export class UserService {
           },
         },
       });
-      return 'delete city';
+      return false;
     }
   }
   getAllFavCityIDUser(userId: string) {
     return this.prismaService.client.user.findUnique({
       where: { id: userId },
+      select: {
+        favoriteCities: true,
+        is_admin: true,
+      },
+    });
+  }
+
+  getPopularIDCityByAdmin() {
+    return this.prismaService.client.user.findFirst({
+      where: { is_admin: true },
       select: {
         favoriteCities: true,
         is_admin: true,

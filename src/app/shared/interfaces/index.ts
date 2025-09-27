@@ -4,3 +4,4 @@ export * from './response-weather-city';
 export * from './forecast-data';
 export * from './forecast-five-days';
 export * from './response-city-by-id';
+export * from './response-ids-city-user';

@@ -54,19 +54,6 @@ export class DetailCityComponent implements OnInit {
     this.apiService.fetchByCityName(this.slug()).subscribe({
       next: (res) => {
         const data = res[0];
-        console.log(data);
-
-        // const body: IForecastForCard = {
-        // name:data.name
-        //   date: ,
-        //   warmest: n.main.temp,
-        //   coldest: null,
-        //   icon: n.weather[0].icon,
-        //   description: n.weather[0].description,
-        //   precipitation: n.pop,
-        //   humidity: n.main.humidity,
-        //   pressure: n.main.pressure,
-        // };
         this.weatherInfo.set(res[0]);
         this.weatherCity.set(res[0].weather[0]);
       },
@@ -78,12 +65,6 @@ export class DetailCityComponent implements OnInit {
         this.forecastFor5Days.set(forecastFor5Days);
       }
       this.forecastData.set(res);
-    });
-    this.apiService.getSetOfCitiesForecast().subscribe((res) => {
-      // console.log(res);
-    });
-    this.apiService.getAllFavCityIDUser().subscribe((res) => {
-      console.log(res);
     });
   }
 

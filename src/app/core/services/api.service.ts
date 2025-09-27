@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import {
   IForecastData,
   IResponseCityById,
+  IResponseIdsCityUser,
   IUserBody,
   IUserCreateResult,
   IUserLoginCredential,
@@ -36,9 +37,7 @@ export class ApiService {
     return this.http.get(`${url}/${icon}@2x.png`, { responseType: 'blob' });
   }
 
-  getSetOfCitiesForecast() {
-    const arr = [524901, 703448, 2643743];
-
+  getSetOfCitiesForecast(arr: number[]) {
     const requests = arr.map((city) =>
       this.http.get<IResponseCityById>(
         `${this.weatherURL}/data/2.5/weather?id=${city}`
@@ -49,7 +48,16 @@ export class ApiService {
   }
 
   getAllFavCityIDUser() {
-    return this.http.get(`${this.authURL}/user/favorite`, {
+    return this.http.get<IResponseIdsCityUser>(
+      `${this.authURL}/user/favorite`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  getPopularIDCityByAdmin() {
+    return this.http.get<IResponseIdsCityUser>(`${this.authURL}/user/popular`, {
       withCredentials: true,
     });
   }

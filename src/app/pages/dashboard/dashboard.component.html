@@ -35,7 +35,23 @@
       </div>
     </div>
   </div>
-
-  <app-cards title="My favorites cities" />
-  <app-cards title="Popular cities" />
+  <div class="ddd">
+    @if(!is_admin()){
+    <app-cards
+      title="My favorites cities"
+      typeCard="favorite"
+      [weatherData]="arrayFavoriteCityUser()"
+    />
+    }
+    <app-cards
+      title="Default city"
+      typeCard="default"
+      [weatherData]="arrayFavoriteCityUser().slice(0, 1)"
+    />
+    <app-cards
+      title="Popular cities"
+      typeCard="popular"
+      [weatherData]="arrayPopularCityByAdmin()"
+    />
+  </div>
 </section>

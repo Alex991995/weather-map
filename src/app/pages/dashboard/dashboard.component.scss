@@ -2,3 +2,8 @@
   display: flex;
   justify-content: center
 }
+
+.ddd {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}

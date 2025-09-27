@@ -1,7 +1,5 @@
 .wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-  // gap: 10px;
-  // display: flex;
-  // width: auto;
+  gap: 10px;
+  display: flex;
+
 }
