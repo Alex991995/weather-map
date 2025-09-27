@@ -41,6 +41,21 @@ export class UserController {
       },
     );
 
+    this.router.post(
+      '/default',
+      async (
+        req: Request<object, object, { defaultCityName: string }>,
+        res: Response,
+        next: NextFunction,
+      ) => {
+        const defaultCityName = req.body.defaultCityName;
+        const userId = req.user.id;
+
+        const result = await this.userService.setDefaultCity(userId, defaultCityName);
+        res.send({ is_added: true });
+      },
+    );
+
     this.router.get(
       '/favorite',
       async (req: Request<object, object, IidCity>, res: Response, next: NextFunction) => {

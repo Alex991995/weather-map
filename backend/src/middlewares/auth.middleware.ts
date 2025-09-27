@@ -13,11 +13,9 @@ export class AuthMiddleware {
       try {
         const payload = await this.authService.verifyToken(token);
         const user = await this.authService.findUser(payload.email);
-        // console.log(user);
         if (user) {
           req.user = user;
         }
-
         next();
       } catch (error) {
         next(new HttpError(401, 'invalid token'));

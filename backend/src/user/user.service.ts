@@ -67,6 +67,13 @@ export class UserService {
     });
   }
 
+  setDefaultCity(userId: string, defaultCityName: string) {
+    return this.prismaService.client.user.update({
+      where: { id: userId },
+      data: { defaultCityName: defaultCityName },
+    });
+  }
+
   async getAllUsers() {
     return await this.prismaService.client.user.findMany();
   }

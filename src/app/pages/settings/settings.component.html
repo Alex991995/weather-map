@@ -1,16 +1,34 @@
 <section class="container">
-  <app-toggle-theme />
-  <div>
-    <label for=""> Temperature measurement </label>
+  <div class="d-flex justify-content-between mt-4">
+    <div class="d-flex justify-content-between align-items-end gap-4">
+      <div>
+        <label for="temp"> Temperature measurement </label>
+        <select
+          id="temp"
+          class="form-select"
+          [(ngModel)]="selectedValue"
+          (change)="changeEventSelector()"
+        >
+          @for (temp of arrayTempMeasure(); track $index) {
+          <option [value]="temp">&deg;{{ temp }}</option>
+          }
+        </select>
+      </div>
 
-    <select
-      class="form-select w-25"
-      [(ngModel)]="selectedValue"
-      (change)="changeEventSelector()"
-    >
-      @for (temp of arrayTempMeasure(); track $index) {
-      <option [value]="temp">&deg;{{ temp }}</option>
-      }
-    </select>
+      <div class="input-group">
+        <input
+          class="form-control"
+          placeholder="Type city..."
+          [(ngModel)]="defaultCity"
+        />
+        <button
+          class="btn btn-outline-primary"
+          (click)="clickEventInputDefaultCity()"
+        >
+          button
+        </button>
+      </div>
+    </div>
+    <app-toggle-theme />
   </div>
 </section>

@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService);
   private destroyRef = inject(DestroyRef);
   private arrayIDsFavCityUser = signal<number[]>([]);
-  protected arrayIDsPopularCityByAdmin = signal<number[]>([]);
+  private arrayIDsPopularCityByAdmin = signal<number[]>([]);
   protected arrayFavoriteCityUser = signal<IResponseCityById[]>([]);
   protected arrayPopularCityByAdmin = signal<IResponseCityById[]>([]);
 

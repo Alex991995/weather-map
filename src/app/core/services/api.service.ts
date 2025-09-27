@@ -62,6 +62,14 @@ export class ApiService {
     });
   }
 
+  setDefaultCity(defaultCityName: string) {
+    const body = { defaultCityName };
+    return this.http.post<IResponseIdsCityUser>(
+      `${this.authURL}/user/default`,
+      body
+    );
+  }
+
   fetchByCityName(name: string) {
     return this.http.get<IWeatherInfo[]>(
       `${this.weatherURL}/data/3/find?q=${name}`

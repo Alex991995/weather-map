@@ -8,7 +8,7 @@ export function AddAPIKeyToRequest(
     params: req.params.set('appid', '072ddfcf932730e7863190ee2f0af0e0'),
   });
   if (cloneReq.method === 'POST') {
-    return next(req);
+    return next(req.clone({ withCredentials: true }));
   } else {
     return next(cloneReq);
   }

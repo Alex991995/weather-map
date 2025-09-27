@@ -15,12 +15,13 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  firstName String
-  lastName  String
-  password  String
-  email     String  @unique
-  is_admin  Boolean @default(false)
+  id              String  @id @default(uuid())
+  firstName       String
+  lastName        String
+  password        String
+  email           String  @unique
+  is_admin        Boolean @default(false)
+  defaultCityName String?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
