@@ -75,7 +75,8 @@ export class UserController {
     );
 
     this.router.get('', async (req, res) => {
-      const result = await this.userService.getAllUsers();
+      const userId = req.user.id;
+      const result = await this.userService.getUserByID(userId);
 
       res.send(result);
     });

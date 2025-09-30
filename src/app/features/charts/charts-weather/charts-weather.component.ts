@@ -25,6 +25,7 @@ export class ChartsWeatherComponent {
     const today = new Date().toISOString().split('T')[0];
     effect(() => {
       const data = this.forecastData();
+      console.log(data);
       if (data) {
         const todayWeather = data.list.filter((item) =>
           item.dt_txt.startsWith(today)

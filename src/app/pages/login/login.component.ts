@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
 import { ErrorResponse, IUserLoginCredential } from 'app/shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LoginComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private apiService = inject(ApiService);
   protected errorMessage = signal('');
@@ -47,7 +49,8 @@ export class LoginComponent implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           complete: () => {
-            // this.router.navigateByUrl('/login');
+            this.authService.setStatusAuthorization(true);
+            this.router.navigateByUrl('/');
           },
           error: (err: ErrorResponse) => {
             console.log(err);

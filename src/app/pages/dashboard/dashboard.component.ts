@@ -12,7 +12,11 @@ import { arrayCities } from 'app/shared/constants';
 import { CardsComponent } from '@components/cards/cards.component';
 import { ApiService } from '@core/services/api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IResponseCityById } from 'app/shared/interfaces';
+import {
+  IForecastCityForCards,
+  IResponseCityById,
+} from 'app/shared/interfaces';
+import { extractNecessaryFieldsForCards } from './helper/extract-necessary-fields-for-cards';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,8 +30,10 @@ export class DashboardComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private arrayIDsFavCityUser = signal<number[]>([]);
   private arrayIDsPopularCityByAdmin = signal<number[]>([]);
-  protected arrayFavoriteCityUser = signal<IResponseCityById[]>([]);
-  protected arrayPopularCityByAdmin = signal<IResponseCityById[]>([]);
+  protected arrayFavoriteCityUser = signal<IForecastCityForCards[]>([]);
+  protected arrayPopularCityByAdmin = signal<IForecastCityForCards[]>([]);
+  protected defaultCityOnDashboard = signal<IForecastCityForCards[]>([]);
+  protected defaultCity = signal('');
 
   protected city = signal('');
   protected is_admin = signal(false);
@@ -43,7 +49,8 @@ export class DashboardComponent implements OnInit {
           .getSetOfCitiesForecast(arrayIDsFavCityUser)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
-            this.arrayFavoriteCityUser.set(res);
+            const transformData = extractNecessaryFieldsForCards(res);
+            this.arrayFavoriteCityUser.set(transformData);
           });
       }
 
@@ -53,8 +60,24 @@ export class DashboardComponent implements OnInit {
           .getSetOfCitiesForecast(arrayIDsPopularCityByAdmin)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
-            this.arrayPopularCityByAdmin.set(res);
+            const transformData = extractNecessaryFieldsForCards(res);
+            this.arrayPopularCityByAdmin.set(transformData);
           });
+      }
+      const defaultCity = this.defaultCity();
+      if (defaultCity) {
+        this.apiService.fetchByCityName(defaultCity).subscribe((res) => {
+          const firstCity = res[0];
+          const transformData: IForecastCityForCards = {
+            name: firstCity.name,
+            icon: firstCity.weather[0].icon,
+            temp: firstCity.temp,
+            humidity: firstCity.humidity,
+            pressure: firstCity.pressure,
+            description: firstCity.weather[0].description,
+          };
+          this.defaultCityOnDashboard.set([transformData]);
+        });
       }
     });
   }
@@ -76,6 +99,10 @@ export class DashboardComponent implements OnInit {
         const arrIDs = res.favoriteCities.map((c) => c.id_city);
         this.arrayIDsPopularCityByAdmin.set(arrIDs);
       });
+
+    this.apiService.getUser().subscribe((res) => {
+      this.defaultCity.set(res.defaultCityName);
+    });
   }
 
   changeEventInput() {

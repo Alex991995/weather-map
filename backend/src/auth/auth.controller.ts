@@ -28,6 +28,12 @@ export class AuthController {
       },
     );
 
+    this.router.get('/verify', async (req, res, next) => {
+      const token = req.token;
+      const payload = await this.authService.verifyToken(token);
+      res.send(payload);
+    });
+
     return this.router;
   }
 }

@@ -74,14 +74,22 @@ export class UserService {
     });
   }
 
-  async getAllUsers() {
-    return await this.prismaService.client.user.findMany();
-  }
+  // async getAllUsers() {
+  //   return await this.prismaService.client.user.findMany();
+  // }
 
-  async getUserByID(id: string) {
-    return await this.prismaService.client.user.findUnique({
+  getUserByID(id: string) {
+    return this.prismaService.client.user.findUnique({
       where: {
         id,
+      },
+      select: {
+        defaultCityName: true,
+        email: true,
+        firstName: true,
+        id: true,
+        is_admin: true,
+        lastName: true,
       },
     });
   }

@@ -4,6 +4,7 @@ import {
   IForecastData,
   IResponseCityById,
   IResponseIdsCityUser,
+  IResponseUserData,
   IUserBody,
   IUserCreateResult,
   IUserLoginCredential,
@@ -19,19 +20,6 @@ export class ApiService {
   private authURL = 'http://localhost:3000';
   private http = inject(HttpClient);
 
-  createUser(body: IUserBody) {
-    return this.http.post<IUserCreateResult>(
-      `${this.authURL}/user/create`,
-      body
-    );
-  }
-
-  loginUser(body: IUserLoginCredential) {
-    return this.http.post(`${this.authURL}/auth/login`, body, {
-      withCredentials: true,
-    });
-  }
-
   getIconWeather(icon: string) {
     const url = 'http://openweathermap.org/img/wn';
     return this.http.get(`${url}/${icon}@2x.png`, { responseType: 'blob' });
@@ -45,6 +33,39 @@ export class ApiService {
     );
 
     return forkJoin(requests);
+  }
+
+  fetchByCityName(name: string) {
+    return this.http.get<IWeatherInfo[]>(
+      `${this.weatherURL}/data/3/find?q=${name}`
+    );
+  }
+
+  fetchByArrayCityName(array: string[]) {
+    const requests = array.map((city) =>
+      this.http.get<IForecastData>(
+        `${this.weatherURL}/data/2.5/forecast?q=${city}`
+      )
+    );
+
+    return forkJoin(requests);
+  }
+
+  fetchForecastCity(city: string) {
+    return this.http.get<IForecastData>(
+      `${this.weatherURL}/data/2.5/forecast?q=${city}`
+    );
+  }
+
+  createUser(body: IUserBody) {
+    return this.http.post<IUserCreateResult>(
+      `${this.authURL}/user/create`,
+      body
+    );
+  }
+
+  loginUser(body: IUserLoginCredential) {
+    return this.http.post(`${this.authURL}/auth/login`, body);
   }
 
   getAllFavCityIDUser() {
@@ -70,27 +91,19 @@ export class ApiService {
     );
   }
 
-  fetchByCityName(name: string) {
-    return this.http.get<IWeatherInfo[]>(
-      `${this.weatherURL}/data/3/find?q=${name}`
-    );
-  }
-
-  fetchForecastCity(city: string) {
-    return this.http.get<IForecastData>(
-      `${this.weatherURL}/data/2.5/forecast?q=${city}`
-    );
-  }
-
   addFavoriteCityByID(id: number) {
     const body = { id };
-    return this.http.post(`${this.authURL}/user/favorite`, body, {
+    return this.http.post(`${this.authURL}/user/favorite`, body);
+  }
+
+  getUser() {
+    return this.http.get<IResponseUserData>(`${this.authURL}/user`, {
       withCredentials: true,
     });
   }
 
-  getUser() {
-    return this.http.get(`${this.authURL}/user`, {
+  verifyToken() {
+    return this.http.get(`${this.authURL}/auth/verify`, {
       withCredentials: true,
     });
   }

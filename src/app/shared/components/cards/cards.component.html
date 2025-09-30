@@ -10,18 +10,14 @@
     <div class="card-body text-center">
       <h5 class="card-title">{{ city.name }}</h5>
       <img
-        [src]="
-          'https://openweathermap.org/img/wn/' +
-          city.weather[0].icon +
-          '@2x.png'
-        "
+        [src]="'https://openweathermap.org/img/wn/' + city.icon + '@2x.png'"
         alt="Weather icon"
       />
-      <p class="card-text">{{ city.main.temp | convertTemp }}</p>
-      <p>💧 Humidity: {{ city.main.humidity }}%</p>
-      <p>Pressure: {{ city.main.pressure }} hPa</p>
+      <p class="card-text">{{ city.temp | convertTemp }}</p>
+      <p>💧 Humidity: {{ city.humidity }}%</p>
+      <p>Pressure: {{ city.pressure }} hPa</p>
 
-      <p class="text-muted">{{ city.weather[0].description }}</p>
+      <p class="text-muted">{{ city.description }}</p>
     </div>
   </div>
   } }

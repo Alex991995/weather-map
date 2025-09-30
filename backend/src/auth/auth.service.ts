@@ -35,17 +35,6 @@ export class AuthService {
     });
   }
 
-  // async verifyToken(token: string) {
-  //   return new Promise((resolve, reject) => {
-  //     jwt.verify(token, secret, (err, payload) => {
-  //       if (err) {
-  //         reject(err);
-  //       }
-  //       resolve(payload as IToken);
-  //     });
-  //   });
-  // }
-
   public verifyToken(token: string): Promise<IPayload> {
     return new Promise<IPayload>((resolve, reject) => {
       jwt.verify(token, secret, (err: jwt.VerifyErrors | null, payload: unknown) => {

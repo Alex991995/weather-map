@@ -1,6 +1,9 @@
 import { Component, input, OnInit, signal } from '@angular/core';
 import { ConvertTempPipe } from '../../pipes/convert-temp.pipe';
-import { IResponseCityById } from 'app/shared/interfaces';
+import {
+  IForecastCityForCards,
+  IResponseCityById,
+} from 'app/shared/interfaces';
 
 @Component({
   selector: 'app-cards',
@@ -11,6 +14,6 @@ import { IResponseCityById } from 'app/shared/interfaces';
 export class CardsComponent {
   title = input.required();
   typeCard = input.required();
-  weatherData = input<IResponseCityById[]>([]);
+  weatherData = input<IForecastCityForCards[]>([]);
   arrayTypeCards = ['popular', 'default', 'favorite'];
 }

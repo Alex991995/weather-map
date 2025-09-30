@@ -1,15 +1,18 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+
     children: [
       {
         path: '',
         component: DashboardComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'city/:slug',
@@ -17,6 +20,7 @@ export const routes: Routes = [
           import('@pages/detail-city/detail-city.component').then(
             (m) => m.DetailCityComponent
           ),
+        canActivate: [authGuard],
       },
       {
         path: 'register',
@@ -36,6 +40,15 @@ export const routes: Routes = [
           import('@pages/settings/settings.component').then(
             (m) => m.SettingsComponent
           ),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'comparison',
+        loadComponent: () =>
+          import('@pages/comparison/comparison.component').then(
+            (m) => m.ComparisonComponent
+          ),
+        canActivate: [authGuard],
       },
     ],
   },

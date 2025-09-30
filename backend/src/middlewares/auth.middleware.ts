@@ -15,13 +15,14 @@ export class AuthMiddleware {
         const user = await this.authService.findUser(payload.email);
         if (user) {
           req.user = user;
+          req.token = token;
         }
         next();
       } catch (error) {
         next(new HttpError(401, 'invalid token'));
       }
     } else {
-      if (route === '/user/create' || route === '/auth/login') {
+      if (route === '/user/create' || route === '/auth/login' || route === '/auth/verify') {
         return next();
       } else {
         next(new HttpError(403, 'forbidden access'));

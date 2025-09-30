@@ -5,3 +5,5 @@ export * from './forecast-data';
 export * from './forecast-five-days';
 export * from './response-city-by-id';
 export * from './response-ids-city-user';
+export * from './response-user-data';
+export * from './forecast-city-for-cards';

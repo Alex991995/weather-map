@@ -1,0 +1,56 @@
+<section>
+  <div class="input-group">
+    <input
+      class="form-control"
+      placeholder="Type city..."
+      [(ngModel)]="inputValue"
+    />
+    <button
+      class="btn btn-outline-primary"
+      (click)="clickEventInputChoseCity()"
+    >
+      button
+    </button>
+  </div>
+
+  <div>
+    <label for="temp"> Сhoose a forecast for.. </label>
+    <select id="temp" class="form-select" [(ngModel)]="chosenRangeForecast">
+      @for (range of rangeForecast(); track $index) {
+      <option [value]="range">{{ range }}</option>
+      }
+    </select>
+  </div>
+
+  <div>
+    @if(arrayChosenCities().length){
+    <ul>
+      @for (city of arrayChosenCities(); track $index) {
+      <li class="d-flex gap-2">
+        <h5>{{ city }}</h5>
+        <button
+          (click)="deleteFromChosenCities($index)"
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+        ></button>
+      </li>
+      }
+    </ul>
+    }
+  </div>
+  <button (click)="clickEventCompareWether()" class="btn btn-outline-secondary">
+    Compare wether
+  </button>
+
+  <div #chart>
+    @if(chartOptions){
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [dataLabels]="chartOptions.dataLabels"
+    ></apx-chart>
+    }
+  </div>
+</section>
