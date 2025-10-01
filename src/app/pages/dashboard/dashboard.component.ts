@@ -17,6 +17,7 @@ import {
   IResponseCityById,
 } from 'app/shared/interfaces';
 import { extractNecessaryFieldsForCards } from './helper/extract-necessary-fields-for-cards';
+import { StoreLocallyHistoryReqService } from '@core/services/store-locally-history-req.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
   private router = inject(Router);
   private apiService = inject(ApiService);
   private destroyRef = inject(DestroyRef);
+  private storeLocallyHistoryReqService = inject(StoreLocallyHistoryReqService);
   private arrayIDsFavCityUser = signal<number[]>([]);
   private arrayIDsPopularCityByAdmin = signal<number[]>([]);
   protected arrayFavoriteCityUser = signal<IForecastCityForCards[]>([]);
@@ -141,7 +143,11 @@ export class DashboardComponent implements OnInit {
   }
 
   changeEventInput() {
-    this.router.navigate(['city', this.city()]);
+    const city = this.city();
+    if (city) {
+      this.storeLocallyHistoryReqService.storeCity(city);
+      this.router.navigate(['city', city]);
+    }
   }
 
   onCheckboxCountryChange() {
