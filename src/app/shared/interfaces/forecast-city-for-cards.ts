@@ -5,4 +5,5 @@ export interface IForecastCityForCards {
   humidity: number;
   pressure: number;
   description: string;
+  country: string;
 }

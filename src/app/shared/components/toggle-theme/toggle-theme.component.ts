@@ -1,5 +1,14 @@
-import { Component, DOCUMENT, Inject, signal } from '@angular/core';
+import {
+  Component,
+  DOCUMENT,
+  effect,
+  Inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-toggle-theme',
@@ -9,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ToggleThemeComponent {
   currentTheme = signal(false);
+
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.document.body.setAttribute('data-bs-theme', 'light');
   }

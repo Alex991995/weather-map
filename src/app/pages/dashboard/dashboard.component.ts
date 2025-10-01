@@ -39,7 +39,41 @@ export class DashboardComponent implements OnInit {
   protected is_admin = signal(false);
   protected isCountryChecked = signal(false);
   protected isPopulationChecked = signal(false);
+  protected isFavoriteCountryChecked = signal(false);
+  protected isHottestCountryChecked = signal(false);
   protected cities = signal(arrayCities);
+
+  //   Сортировка по температуре (самый тёплый → холодный).
+  // Группировка по континентам или странам.
+
+  onCheckboxFavoriteCountry() {
+    const cloneData = [...this.arrayFavoriteCityUser()];
+    const is_checked = this.isFavoriteCountryChecked();
+
+    if (is_checked) {
+      const res = cloneData.sort((a, b) =>
+        a.country.localeCompare(b.country, undefined, { sensitivity: 'base' })
+      );
+      this.arrayFavoriteCityUser.set(res);
+    } else {
+      const res = cloneData.sort((a, b) =>
+        b.country.localeCompare(a.country, undefined, { sensitivity: 'base' })
+      );
+      this.arrayFavoriteCityUser.set(res);
+    }
+  }
+  onCheckboxHottestCountry() {
+    const cloneData = [...this.arrayFavoriteCityUser()];
+    const is_checked = this.isHottestCountryChecked();
+
+    if (is_checked) {
+      const res = cloneData.sort((a, b) => b.temp - a.temp);
+      this.arrayFavoriteCityUser.set(res);
+    } else {
+      const res = cloneData.sort((a, b) => a.temp - b.temp);
+      this.arrayFavoriteCityUser.set(res);
+    }
+  }
 
   constructor() {
     effect(() => {
@@ -75,6 +109,7 @@ export class DashboardComponent implements OnInit {
             humidity: firstCity.humidity,
             pressure: firstCity.pressure,
             description: firstCity.weather[0].description,
+            country: firstCity.country,
           };
           this.defaultCityOnDashboard.set([transformData]);
         });

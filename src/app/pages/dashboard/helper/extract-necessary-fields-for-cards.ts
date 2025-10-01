@@ -9,6 +9,7 @@ export function extractNecessaryFieldsForCards(data: IResponseCityById[]) {
       humidity: city.main.humidity,
       pressure: city.main.pressure,
       description: city.weather[0].description,
+      country: city.sys.country,
     };
   });
 }

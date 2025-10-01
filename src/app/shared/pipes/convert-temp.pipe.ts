@@ -1,12 +1,12 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
-import { ConvertTempService } from '@core/services/convert-temp.service';
+import { SelectTempService } from '@core/services/select-temp.service';
 
 @Pipe({
   name: 'convertTemp',
 })
 export class ConvertTempPipe implements PipeTransform {
-  private convertTempService = inject(ConvertTempService);
-  private unitTemp = this.convertTempService.selectedTemp;
+  private selectTempService = inject(SelectTempService);
+  private unitTemp = this.selectTempService.selectedTemp;
   transform(value: number | undefined, ...args: unknown[]) {
     if (!value) return null;
 

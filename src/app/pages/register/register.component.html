@@ -1,85 +1,93 @@
-<section class="container h-100 d-flex flex-column justify-content-center">
-  <form [formGroup]="form" (submit)="submitEvent()" class="d-flex flex-column">
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input
-        formControlName="email"
-        type="email"
-        class="form-control"
-        id="email"
-      />
-      <div id="email" class="form-text error-message text-danger">
-        @if(isValidEmail){invalid email}
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="firstName" class="form-label">First Name</label>
-      <input
-        formControlName="firstName"
-        type="name"
-        class="form-control"
-        id="firstName"
-        aria-describedby="firstName"
-      />
-
-      <div id="name" class="form-text error-message text-danger">
-        @if(isValidFirstName){should be more than one symbol}
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Last Name</label>
-      <input
-        formControlName="lastName"
-        type="name"
-        class="form-control"
-        id="lastName"
-        aria-describedby="lastName"
-      />
-
-      <div id="name" class="form-text error-message text-danger">
-        @if(isValidLastName){should be more than one symbol}
-      </div>
-    </div>
-    <div formGroupName="passwords">
+<section
+  class="container h-100 d-flex flex-column justify-content-center flex-wrap align-content-center"
+>
+  <div class="w-50">
+    <form
+      [formGroup]="form"
+      (submit)="submitEvent()"
+      class="d-flex flex-column"
+    >
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="email" class="form-label">Email address</label>
         <input
-          formControlName="password"
-          type="password"
+          formControlName="email"
+          type="email"
           class="form-control"
-          id="password"
-          aria-describedby="password"
+          id="email"
         />
-
-        <div id="name" class="form-text error-message text-danger">
-          @if(isValidPassword){should be equal}
+        <div id="email" class="form-text error-message text-danger">
+          @if(isValidEmail){invalid email}
         </div>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Repeat Password</label>
+        <label for="firstName" class="form-label">First Name</label>
         <input
-          formControlName="repeatPassword"
-          type="password"
+          formControlName="firstName"
+          type="name"
           class="form-control"
-          id="repeatPassword"
-          aria-describedby="repeatPassword"
+          id="firstName"
+          aria-describedby="firstName"
         />
 
         <div id="name" class="form-text error-message text-danger">
-          @if(isValidRepeatPassword){should be equal}
+          @if(isValidFirstName){should be more than one symbol}
         </div>
       </div>
-    </div>
-    <div class="d-flex justify-content-between">
-      <div class="form-text error-message text-danger">
-        @if(errorMessage()){
-        {{ errorMessage() }}
-        }
-      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input
+          formControlName="lastName"
+          type="name"
+          class="form-control"
+          id="lastName"
+          aria-describedby="lastName"
+        />
 
-      <button type="submit" class="btn btn-primary" [disabled]="isDisable">
-        Submit
-      </button>
-    </div>
-  </form>
+        <div id="name" class="form-text error-message text-danger">
+          @if(isValidLastName){should be more than one symbol}
+        </div>
+      </div>
+      <div formGroupName="passwords">
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+            id="password"
+            aria-describedby="password"
+          />
+
+          <div id="name" class="form-text error-message text-danger">
+            @if(isValidPassword){should be equal}
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Repeat Password</label>
+          <input
+            formControlName="repeatPassword"
+            type="password"
+            class="form-control"
+            id="repeatPassword"
+            aria-describedby="repeatPassword"
+          />
+
+          <div id="name" class="form-text error-message text-danger">
+            @if(isValidRepeatPassword){should be equal}
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+        <div class="form-text error-message text-danger">
+          @if(errorMessage()){
+          {{ errorMessage() }}
+          }
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="isDisable">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
 </section>

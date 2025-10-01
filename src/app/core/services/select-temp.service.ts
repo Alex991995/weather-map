@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class ConvertTempService {
+export class SelectTempService {
   arrayTempMeasure = signal(['C', 'F']).asReadonly();
   selectedTemp = signal(this.arrayTempMeasure()[0]);
 

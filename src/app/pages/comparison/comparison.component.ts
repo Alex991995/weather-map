@@ -1,7 +1,7 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
-import { List, City, IForecastData } from 'app/shared/interfaces';
+import { IForecastData } from 'app/shared/interfaces';
 import { ChartComponent } from 'ng-apexcharts';
 
 import {
@@ -14,6 +14,7 @@ import {
   ApexTitleSubtitle,
 } from 'ng-apexcharts';
 import { IDataForCharts } from './model/data-for-charts';
+import { SelectTempService } from '@core/services/select-temp.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -23,6 +24,7 @@ export type ChartOptions = {
   tooltip: ApexTooltip;
   dataLabels: ApexDataLabels;
   yaxis?: ApexYAxis;
+  subtitle: ApexTitleSubtitle;
 };
 
 @Component({
@@ -33,12 +35,20 @@ export type ChartOptions = {
 })
 export class ComparisonComponent {
   private apiService = inject(ApiService);
+  private selectTempService = inject(SelectTempService);
+  private unitMeasurement = this.selectTempService.selectedTemp;
   @ViewChild('chart') chart!: ChartComponent;
   protected chartOptions!: ChartOptions;
-  inputValue = signal('');
-  rangeForecast = signal<string[]>(['today', 'for five days']);
-  chosenRangeForecast = signal<'today' | 'for five days'>('today');
-  arrayChosenCities = signal<string[]>(['london', 'moscow', 'minsk']);
+  protected inputValue = signal('');
+  protected parameterSortForCharts = signal<string[]>([
+    'temp',
+    'humidity',
+    'wind',
+  ]);
+  protected chosenParameter = signal<'temp' | 'humidity' | 'wind'>('temp');
+  protected rangeForecast = signal<string[]>(['today', 'for five days']);
+  protected chosenRangeForecast = signal<'today' | 'for five days'>('today');
+  protected arrayChosenCities = signal<string[]>(['london', 'moscow', 'minsk']);
 
   clickEventInputChoseCity() {
     const newCity = this.inputValue();
@@ -54,45 +64,102 @@ export class ComparisonComponent {
     this.arrayChosenCities.set(filteredArray);
   }
 
-  createTodayDataForecastForCharts(res: IForecastData[]) {
+  createTodayDataForecastForCharts(
+    res: IForecastData[],
+    buildChartsBy: 'temp' | 'humidity' | 'wind'
+  ) {
     const today = new Date().toISOString().split('T')[0];
-
     const cityAndListForecast = res.map((item) => ({
       city: item.city,
       list: item.list.filter((c) => c.dt_txt.startsWith(today)),
     }));
-
     const dataForCharts: IDataForCharts[] = [];
-    for (const element of cityAndListForecast) {
-      const result = {
-        name: element.city.name,
-        data: element.list.map((item) => item.main.temp),
-        categories: element.list.map((item) => item.dt_txt),
-      };
-      dataForCharts.push(result);
+    if (buildChartsBy !== 'wind') {
+      for (const element of cityAndListForecast) {
+        const result = {
+          name: element.city.name,
+          data: element.list.map((item) => {
+            if (buildChartsBy === 'temp') {
+              return this.calculateUnitMeasurementTemp(item.main.temp);
+            }
+            return item.main.humidity;
+          }),
+          categories: element.list.map((item) => item.dt_txt),
+        };
+        dataForCharts.push(result);
+      }
+      this.setCharts(dataForCharts);
+    } else {
+      const dataForCharts: IDataForCharts[] = [];
+      for (const element of cityAndListForecast) {
+        const result = {
+          name: element.city.name,
+          data: element.list.map((item) => item.wind.speed),
+          categories: element.list.map((item) => item.dt_txt),
+        };
+        dataForCharts.push(result);
+      }
+      this.setCharts(dataForCharts);
     }
-
-    this.setCharts(dataForCharts);
   }
 
-  createFor5daysDataForecastForCharts(res: IForecastData[]) {
-    const cityAndListForecast: IDataForCharts[] = res.map((item) => ({
-      name: item.city.name,
-      data: item.list.map((item) => item.main.temp),
-      categories: item.list.map((item) => item.dt_txt),
-    }));
-    this.setCharts(cityAndListForecast);
+  createFor5daysDataForecastForCharts(
+    res: IForecastData[],
+    buildChartsBy: 'temp' | 'humidity' | 'wind'
+  ) {
+    if (buildChartsBy !== 'wind') {
+      const cityAndListForecast: IDataForCharts[] = res.map((item) => ({
+        name: item.city.name,
+        data: item.list.map((item) => {
+          if (buildChartsBy === 'temp') {
+            return this.calculateUnitMeasurementTemp(item.main.temp);
+          }
+          return item.main.humidity;
+        }),
+        categories: item.list.map((item) => item.dt_txt),
+      }));
+      this.setCharts(cityAndListForecast);
+    } else {
+      const cityAndListForecast: IDataForCharts[] = res.map((item) => ({
+        name: item.city.name,
+        data: item.list.map((item) => item.wind.speed),
+        categories: item.list.map((item) => item.dt_txt),
+      }));
+      this.setCharts(cityAndListForecast);
+    }
+  }
+
+  calculateUnitMeasurementTemp(temp: number) {
+    if (this.unitMeasurement() === 'C') {
+      const res = temp - 273.15;
+      return Math.floor(res);
+    } else {
+      let a = temp - 273.15;
+      let res = a * 1.8 + 32;
+      return Math.floor(res);
+    }
   }
 
   clickEventCompareWether() {
+    const chosenParameter = this.chosenParameter();
     const array = this.arrayChosenCities();
     this.apiService.fetchByArrayCityName(array).subscribe((res) => {
       if (this.chosenRangeForecast() === 'today') {
-        this.createTodayDataForecastForCharts(res);
+        this.createTodayDataForecastForCharts(res, chosenParameter);
       } else {
-        this.createFor5daysDataForecastForCharts(res);
+        this.createFor5daysDataForecastForCharts(res, chosenParameter);
       }
     });
+  }
+  get getTitleCharts() {
+    const chosenParameter = this.chosenParameter();
+    if (chosenParameter === 'humidity') {
+      return `Temperature humidity`;
+    } else if (chosenParameter === 'temp') {
+      return `Temperature trends (°${this.unitMeasurement()})`;
+    } else {
+      return `Temperature wind`;
+    }
   }
 
   setCharts(cityAndListForecast: IDataForCharts[]) {
@@ -110,6 +177,10 @@ export class ComparisonComponent {
       },
       stroke: {
         curve: 'smooth',
+      },
+      subtitle: {
+        text: this.getTitleCharts,
+        align: 'right',
       },
       xaxis: {
         type: 'datetime',
