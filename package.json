@@ -23,6 +23,7 @@
     "all-the-cities": "^3.1.0",
     "apexcharts": "^5.3.5",
     "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
     "country-state-city": "^3.2.1",
     "ng-apexcharts": "^2.0.1",
     "ngx-cookie-service": "^20.1.0",

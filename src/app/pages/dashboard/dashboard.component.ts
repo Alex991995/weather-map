@@ -45,9 +45,6 @@ export class DashboardComponent implements OnInit {
   protected isHottestCountryChecked = signal(false);
   protected cities = signal(arrayCities);
 
-  //   Сортировка по температуре (самый тёплый → холодный).
-  // Группировка по континентам или странам.
-
   onCheckboxFavoriteCountry() {
     const cloneData = [...this.arrayFavoriteCityUser()];
     const is_checked = this.isFavoriteCountryChecked();

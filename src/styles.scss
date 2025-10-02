@@ -1,4 +1,14 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+
+$custom-colors: (
+  "favorite": #ff0000
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);
+@import"bootstrap-icons/font/bootstrap-icons";
 @import 'bootstrap/scss/bootstrap';
+
 
 #toast-container {
   height: 159px;

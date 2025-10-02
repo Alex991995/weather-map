@@ -1,4 +1,18 @@
 <div #chart>
+  <div class="d-flex justify-content-end">
+    <div>
+      <label for="measurement">Measurement </label>
+      <select
+        id="measurement"
+        class="form-select"
+        [(ngModel)]="selectedValue"
+        (change)="changeEventSelector()"
+      >
+        <option value="temperature">temperature</option>
+        <option value="precipitation">precipitation</option>
+      </select>
+    </div>
+  </div>
   @if(chartOptions){
   <apx-chart
     [series]="chartOptions.series"

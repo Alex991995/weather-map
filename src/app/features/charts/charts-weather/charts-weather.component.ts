@@ -5,16 +5,18 @@ import {
   input,
   ViewChild,
   inject,
+  signal,
+  computed,
 } from '@angular/core';
 import { ChartComponent } from 'ng-apexcharts';
-import { Observable } from 'rxjs';
 import { IForecastData } from 'app/shared/interfaces';
 import { ChartOptions } from './model/chart-options';
 import { SelectTempService } from '@core/services/select-temp.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-charts-weather',
-  imports: [ChartComponent],
+  imports: [ChartComponent, FormsModule],
   templateUrl: './charts-weather.component.html',
   styleUrl: './charts-weather.component.scss',
 })
@@ -24,30 +26,53 @@ export class ChartsWeatherComponent {
   private unitMeasurement = this.selectTempService.selectedTemp;
   forecastData = input<IForecastData | undefined>(undefined);
   protected chartOptions!: ChartOptions;
+  selectedValue = signal('temperature');
 
   constructor() {
     const today = new Date().toISOString().split('T')[0];
     effect(() => {
       const data = this.forecastData();
       if (data) {
-        const todayWeather = data.list.filter((item) =>
-          item.dt_txt.startsWith(today)
-        );
-        const dataSeries = todayWeather.map((item) => {
-          if (this.unitMeasurement() === 'C') {
-            const res = item.main.temp - 273.15;
-            return Math.floor(res);
-          } else {
-            let a = item.main.temp - 273.15;
-            let res = a * 1.8 + 32;
-            return Math.floor(res);
-          }
-        });
-        const dataLabels = todayWeather.map((item) => item.dt_txt);
-
-        this.createCharts(dataSeries, dataLabels);
+        this.buildChartsByTemperature(data, today);
       }
     });
+  }
+
+  buildChartsByTemperature(data: IForecastData, today: string) {
+    const todayWeather = data.list.filter((item) =>
+      item.dt_txt.startsWith(today)
+    );
+    const dataSeries = todayWeather.map((item) => {
+      if (this.unitMeasurement() === 'C') {
+        const res = item.main.temp - 273.15;
+        return Math.floor(res);
+      } else {
+        let a = item.main.temp - 273.15;
+        let res = a * 1.8 + 32;
+        return Math.floor(res);
+      }
+    });
+    const dataLabels = todayWeather.map((item) => item.dt_txt);
+
+    this.createCharts(dataSeries, dataLabels);
+  }
+  buildChartsByPrecipitation(data: IForecastData, today: string) {
+    const todayWeather = data.list.filter((item) =>
+      item.dt_txt.startsWith(today)
+    );
+    const dataSeries = todayWeather.map((item) => item.pop * 100);
+    const dataLabels = todayWeather.map((item) => item.dt_txt);
+
+    this.createCharts(dataSeries, dataLabels);
+  }
+
+  changeEventSelector() {
+    const today = new Date().toISOString().split('T')[0];
+    if (this.selectedValue() === 'temperature') {
+      this.buildChartsByTemperature(this.forecastData()!, today);
+    } else {
+      this.buildChartsByPrecipitation(this.forecastData()!, today);
+    }
   }
 
   createCharts(dataSeries: number[], dataLabels: string[]) {

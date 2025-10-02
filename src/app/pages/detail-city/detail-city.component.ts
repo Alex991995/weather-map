@@ -1,7 +1,6 @@
-import { DecimalPipe } from '@angular/common';
 import {
   Component,
-  computed,
+  DestroyRef,
   effect,
   inject,
   input,
@@ -19,19 +18,28 @@ import {
 import { ChartsWeatherComponent } from 'app/features/charts/charts-weather/charts-weather.component';
 import { CardsForecastComponent } from 'app/features/forecast/cards-forecast/cards-forecast.component';
 import { buildForecast } from './helper/build-forecast';
+import { RecommendationsComponent } from 'app/features/forecast/recommendations/recommendations.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-detail-city',
-  imports: [ConvertTempPipe, ChartsWeatherComponent, CardsForecastComponent],
+  imports: [
+    ConvertTempPipe,
+    ChartsWeatherComponent,
+    CardsForecastComponent,
+    RecommendationsComponent,
+  ],
   templateUrl: './detail-city.component.html',
   styleUrl: './detail-city.component.scss',
 })
 export class DetailCityComponent implements OnInit {
   private apiService = inject(ApiService);
+  private destroyRef = inject(DestroyRef);
   protected weatherInfo = signal<IWeatherInfo | undefined>(undefined);
   protected weatherCity = signal<Weather | undefined>(undefined);
   protected slug = input('');
   protected iconWeather = signal('');
+  isChosenAsFavorite = signal(false);
 
   forecastFor5Days = signal<IForecastForCard[] | undefined>(undefined);
   forecastData = signal<IForecastData | undefined>(undefined);
@@ -47,15 +55,37 @@ export class DetailCityComponent implements OnInit {
           this.iconWeather.set(imgURL);
         });
       }
+      const weatherInfo = this.weatherInfo();
+
+      if (weatherInfo) {
+        this.apiService
+          .getAllFavCityIDUser()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res) => {
+            const findFavCity = res.favoriteCities.find(
+              (c) => c.id_city === weatherInfo.id
+            );
+
+            this.isChosenAsFavorite.set(!!findFavCity);
+          });
+      }
     });
+  }
+
+  get fillIfChosen() {
+    const isChosenAsFavorite = this.isChosenAsFavorite();
+    if (isChosenAsFavorite) {
+      return 'bi bi-heart-fill fs-3 text-favorite';
+    }
+    return 'bi bi-heart fs-3 ';
   }
 
   ngOnInit() {
     this.apiService.fetchByCityName(this.slug()).subscribe({
       next: (res) => {
         const data = res[0];
-        this.weatherInfo.set(res[0]);
-        this.weatherCity.set(res[0].weather[0]);
+        this.weatherInfo.set(data);
+        this.weatherCity.set(data.weather[0]);
       },
     });
 
@@ -70,7 +100,7 @@ export class DetailCityComponent implements OnInit {
 
   clickEventAddToFavorite(id: number) {
     this.apiService.addFavoriteCityByID(id).subscribe((res) => {
-      console.log(res);
+      this.isChosenAsFavorite.set(res.is_added);
     });
   }
 }

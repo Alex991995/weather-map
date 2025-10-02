@@ -1,12 +1,7 @@
 <h3>{{ title() }}</h3>
 <div class="wrapper">
   @if(weatherData()) { @for (city of weatherData(); track $index) {
-  <div
-    class="card mb-3 shadow-sm"
-    [class.text-bg-primary]="typeCard() === 'popular'"
-    [class.text-bg-warning]="typeCard() === 'default'"
-    [class.text-bg-info]="typeCard() === 'favorite'"
-  >
+  <div [appTypeCard]="typeCard()" class="card mb-3 shadow-sm">
     <div class="card-body text-center">
       <h5 class="card-title">{{ city.name }}</h5>
       <img

@@ -36,7 +36,7 @@ export class UserController {
         const id_city = req.body.id;
         const userId = req.user.id;
 
-        const result = await this.userService.addIDCity(userId, id_city);
+        const result = await this.userService.addFavoriteCity(userId, id_city);
         res.send({ is_added: result });
       },
     );

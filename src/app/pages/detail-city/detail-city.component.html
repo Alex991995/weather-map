@@ -7,24 +7,25 @@
         <h3>{{ weatherCity()?.main }}</h3>
       </div>
       <div>
-        <button
-          class="btn btn-outline-primary"
+        <i
+          [class]="fillIfChosen"
           (click)="clickEventAddToFavorite(weatherInfo()!.id)"
-        >
-          add to fav
-        </button>
+        ></i>
       </div>
     </div>
-    <h3>{{ weatherInfo()?.temp | convertTemp }}</h3>
-    <div>
-      <h4>Humidity</h4>
-      <span> {{ weatherInfo()?.humidity }} %</span>
+    <div class="d-flex justify-content-between">
+      <div>
+        <h3>{{ weatherInfo()?.temp | convertTemp }}</h3>
+        <h4>Humidity</h4>
+        <span> {{ weatherInfo()?.humidity }} %</span>
 
-      <h4>Pressure</h4>
-      <span> {{ weatherInfo()?.pressure }} </span>
+        <h4>Pressure</h4>
+        <span> {{ weatherInfo()?.pressure }} </span>
 
-      <h4>Wind</h4>
-      <span> {{ weatherInfo()?.wind?.speed }} k/m</span>
+        <h4>Wind</h4>
+        <span> {{ weatherInfo()?.wind?.speed }} k/m</span>
+      </div>
+      <app-recommendations [weatherInfo]="weatherInfo()" />
     </div>
   </div>
   <app-charts-weather [forecastData]="forecastData()" />

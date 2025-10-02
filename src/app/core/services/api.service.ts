@@ -93,7 +93,10 @@ export class ApiService {
 
   addFavoriteCityByID(id: number) {
     const body = { id };
-    return this.http.post(`${this.authURL}/user/favorite`, body);
+    return this.http.post<{ is_added: boolean }>(
+      `${this.authURL}/user/favorite`,
+      body
+    );
   }
 
   getUser() {

@@ -29,7 +29,7 @@ export class UserService {
     }
   }
 
-  async addIDCity(userId: string, id_city: number) {
+  async addFavoriteCity(userId: string, id_city: number) {
     try {
       const res = await this.prismaService.client.iDFavoriteCity.create({
         data: { id_city, userId },

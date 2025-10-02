@@ -154,11 +154,11 @@ export class ComparisonComponent {
   get getTitleCharts() {
     const chosenParameter = this.chosenParameter();
     if (chosenParameter === 'humidity') {
-      return `Temperature humidity`;
+      return `Humidity trends`;
     } else if (chosenParameter === 'temp') {
       return `Temperature trends (°${this.unitMeasurement()})`;
     } else {
-      return `Temperature wind`;
+      return `Wind trends`;
     }
   }
 
