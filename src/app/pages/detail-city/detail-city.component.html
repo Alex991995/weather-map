@@ -2,9 +2,9 @@
   <div class="wrapper">
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
-        <h3>Current weather in {{ weatherInfo()?.name }}</h3>
+        <h3 i18n>Current weather in {{ weatherInfo()?.name }}</h3>
         <img [src]="iconWeather()" alt="" />
-        <h3>{{ weatherCity()?.main }}</h3>
+        <h3 i18n>{{ weatherCity()?.main }}</h3>
       </div>
       <div>
         <i
@@ -15,15 +15,15 @@
     </div>
     <div class="d-flex justify-content-between">
       <div>
-        <h3>{{ weatherInfo()?.temp | convertTemp }}</h3>
-        <h4>Humidity</h4>
-        <span> {{ weatherInfo()?.humidity }} %</span>
+        <h3 i18n>{{ weatherInfo()?.temp | convertTemp }}</h3>
+        <h4 i18n>Humidity</h4>
+        <span i18n> {{ weatherInfo()?.humidity }} %</span>
 
-        <h4>Pressure</h4>
-        <span> {{ weatherInfo()?.pressure }} </span>
+        <h4 i18n>Pressure</h4>
+        <span i18n> {{ weatherInfo()?.pressure }} </span>
 
-        <h4>Wind</h4>
-        <span> {{ weatherInfo()?.wind?.speed }} k/m</span>
+        <h4 i18n>Wind</h4>
+        <span i18n> {{ weatherInfo()?.wind?.speed }} k/m</span>
       </div>
       <app-recommendations [weatherInfo]="weatherInfo()" />
     </div>

@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-between mt-4">
     <div class="d-flex justify-content-between align-items-end gap-4">
       <div>
-        <label for="temp"> Temperature measurement </label>
+        <label i18n for="temp"> Temperature measurement </label>
         <select
           id="temp"
           class="form-select"
@@ -10,7 +10,7 @@
           (change)="changeEventSelector()"
         >
           @for (temp of arrayTempMeasure(); track $index) {
-          <option [value]="temp">&deg;{{ temp }}</option>
+          <option i18n [value]="temp">&deg;{{ temp }}</option>
           }
         </select>
       </div>
@@ -22,6 +22,7 @@
           [(ngModel)]="defaultCity"
         />
         <button
+          i18n
           class="btn btn-outline-primary"
           (click)="clickEventInputDefaultCity()"
         >

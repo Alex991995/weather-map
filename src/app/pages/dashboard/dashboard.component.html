@@ -9,7 +9,7 @@
     />
     <datalist id="crypto">
       @for (city of cities(); track $index) {
-      <option [value]="city.name">{{ city.name }}</option>
+      <option i18n [value]="city.name">{{ city.name }}</option>
       }
     </datalist>
     <div>
@@ -21,7 +21,7 @@
           [(ngModel)]="isCountryChecked"
           (change)="onCheckboxCountryChange()"
         />
-        <label class="form-check-label" for="country"> by country </label>
+        <label i18n class="form-check-label" for="country"> by country </label>
       </div>
       <div class="form-check">
         <input
@@ -31,7 +31,9 @@
           [(ngModel)]="isPopulationChecked"
           (change)="onCheckboxPopulationChange()"
         />
-        <label class="form-check-label" for="population"> by population </label>
+        <label i18n class="form-check-label" for="population">
+          by population
+        </label>
       </div>
     </div>
   </div>
@@ -46,7 +48,7 @@
           [(ngModel)]="isFavoriteCountryChecked"
           (change)="onCheckboxFavoriteCountry()"
         />
-        <label class="form-check-label" for="favorite-country">
+        <label i18n class="form-check-label" for="favorite-country">
           by country
         </label>
       </div>
@@ -58,7 +60,7 @@
           [(ngModel)]="isHottestCountryChecked"
           (change)="onCheckboxHottestCountry()"
         />
-        <label class="form-check-label" for="temperature">
+        <label i18n class="form-check-label" for="temperature">
           by temperature
         </label>
       </div>

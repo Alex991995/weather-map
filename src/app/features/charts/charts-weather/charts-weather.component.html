@@ -1,15 +1,15 @@
 <div #chart>
   <div class="d-flex justify-content-end">
     <div>
-      <label for="measurement">Measurement </label>
+      <label i18n for="measurement">Measurement </label>
       <select
         id="measurement"
         class="form-select"
         [(ngModel)]="selectedValue"
         (change)="changeEventSelector()"
       >
-        <option value="temperature">temperature</option>
-        <option value="precipitation">precipitation</option>
+        <option i18n value="temperature">temperature</option>
+        <option i18n value="precipitation">precipitation</option>
       </select>
     </div>
   </div>

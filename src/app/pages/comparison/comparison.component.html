@@ -8,6 +8,7 @@
           [(ngModel)]="inputValue"
         />
         <button
+          i18n
           class="btn btn-outline-primary"
           (click)="clickEventInputChoseCity()"
         >
@@ -21,7 +22,7 @@
           [(ngModel)]="chosenRangeForecast"
         >
           @for (range of rangeForecast(); track $index) {
-          <option [value]="range">{{ range }}</option>
+          <option i18n [value]="range">{{ range }}</option>
           }
         </select>
       </div>
@@ -37,6 +38,7 @@
         </select>
       </div>
       <button
+        i18n
         (click)="clickEventCompareWether()"
         class="btn btn-outline-secondary"
       >
@@ -49,7 +51,7 @@
       <ul class="p-0">
         @for (city of arrayChosenCities(); track $index) {
         <li class="d-flex gap-2">
-          <h5>{{ city }}</h5>
+          <h5 i18n>{{ city }}</h5>
           <button
             (click)="deleteFromChosenCities($index)"
             type="button"

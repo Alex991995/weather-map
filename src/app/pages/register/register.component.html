@@ -8,20 +8,21 @@
       class="d-flex flex-column"
     >
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label i18n for="email" class="form-label">Email address</label>
         <input
           formControlName="email"
           type="email"
           class="form-control"
           id="email"
         />
-        <div id="email" class="form-text error-message text-danger">
+        <div i18n id="email" class="form-text error-message text-danger">
           @if(isValidEmail){invalid email}
         </div>
       </div>
       <div class="mb-3">
-        <label for="firstName" class="form-label">First Name</label>
+        <label i18n for="firstName" class="form-label">First Name</label>
         <input
+          i18n
           formControlName="firstName"
           type="name"
           class="form-control"
@@ -29,13 +30,14 @@
           aria-describedby="firstName"
         />
 
-        <div id="name" class="form-text error-message text-danger">
+        <div i18n id="name" class="form-text error-message text-danger">
           @if(isValidFirstName){should be more than one symbol}
         </div>
       </div>
       <div class="mb-3">
-        <label for="lastName" class="form-label">Last Name</label>
+        <label i18n for="lastName" class="form-label">Last Name</label>
         <input
+          i18n
           formControlName="lastName"
           type="name"
           class="form-control"
@@ -43,14 +45,15 @@
           aria-describedby="lastName"
         />
 
-        <div id="name" class="form-text error-message text-danger">
+        <div i18n id="name" class="form-text error-message text-danger">
           @if(isValidLastName){should be more than one symbol}
         </div>
       </div>
       <div formGroupName="passwords">
         <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
+          <label i18n for="password" class="form-label">Password</label>
           <input
+            i18n
             formControlName="password"
             type="password"
             class="form-control"
@@ -58,13 +61,14 @@
             aria-describedby="password"
           />
 
-          <div id="name" class="form-text error-message text-danger">
+          <div i18n id="name" class="form-text error-message text-danger">
             @if(isValidPassword){should be equal}
           </div>
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Repeat Password</label>
+          <label i18n for="password" class="form-label">Repeat Password</label>
           <input
+            i18n
             formControlName="repeatPassword"
             type="password"
             class="form-control"
@@ -72,19 +76,24 @@
             aria-describedby="repeatPassword"
           />
 
-          <div id="name" class="form-text error-message text-danger">
+          <div i18n id="name" class="form-text error-message text-danger">
             @if(isValidRepeatPassword){should be equal}
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-between">
-        <div class="form-text error-message text-danger">
+        <div i18n class="form-text error-message text-danger">
           @if(errorMessage()){
           {{ errorMessage() }}
           }
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="isDisable">
+        <button
+          i18n
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isDisable"
+        >
           Submit
         </button>
       </div>

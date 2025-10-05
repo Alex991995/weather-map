@@ -10,7 +10,6 @@ export class AuthService {
   cookieService = inject(CookieService);
   apiService = inject(ApiService);
   isAuthorized = signal(true);
-  // access_token = this.cookieService.get('access_token') as string | null;
 
   setStatusAuthorization(status: boolean) {
     this.isAuthorized.set(status);

@@ -33,7 +33,8 @@ export class App {
     this.app.use(cookieParser());
     this.app.use(
       cors({
-        origin: 'http://localhost:4200',
+        // origin: 'http://localhost:4200',
+        origin: ['http://localhost:4200', 'https://locales-2695c.web.app'],
         credentials: true,
       }),
     );
