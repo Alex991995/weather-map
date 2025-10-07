@@ -8,7 +8,7 @@ export class AuthMiddleware {
   async execute(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.access_token as string | undefined;
     const route = req.originalUrl;
-    console.log(req.headers.cookie);
+
     if (token) {
       try {
         const payload = await this.authService.verifyToken(token);
@@ -16,8 +16,8 @@ export class AuthMiddleware {
         if (user) {
           req.user = user;
           req.token = token;
-          console.log(user);
         }
+
         next();
       } catch (error) {
         next(new HttpError(401, 'invalid token'));

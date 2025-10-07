@@ -79,7 +79,7 @@ export class ChartsWeatherComponent {
     this.chartOptions = {
       series: [
         {
-          name: 'Temperature',
+          name: $localize`Temperature`,
           data: dataSeries,
         },
       ],
@@ -97,11 +97,11 @@ export class ChartsWeatherComponent {
         curve: 'straight',
       },
       title: {
-        text: '5-Day Weather Forecast',
+        text: $localize`5-Day Weather Forecast`,
         align: 'left',
       },
       subtitle: {
-        text: `Temperature trends (°${this.unitMeasurement()})`,
+        text: $localize`Temperature trends (°${this.unitMeasurement()})`,
         align: 'left',
       },
       labels: dataLabels,

@@ -18,7 +18,7 @@
     type="checkbox"
     class="input"
     [(ngModel)]="currentTheme"
-    (change)="changeEventCheckbox()"
+    (change)="switchTheme($event)"
   />
   <span class="slider"></span>
 </label>

@@ -82,12 +82,13 @@
         </div>
       </div>
       <div class="d-flex justify-content-between">
-        <div i18n class="form-text error-message text-danger">
-          @if(errorMessage()){
-          {{ errorMessage() }}
-          }
-        </div>
-
+        <a
+          role="button"
+          [routerLink]="['/login']"
+          class="btn btn-light"
+          i18n="@@login"
+          >Log in</a
+        >
         <button
           i18n
           type="submit"
@@ -96,6 +97,11 @@
         >
           Submit
         </button>
+      </div>
+      <div i18n class="form-text error-message text-danger">
+        @if(errorMessage()){
+        {{ errorMessage() }}
+        }
       </div>
     </form>
   </div>

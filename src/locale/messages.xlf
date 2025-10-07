@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="813866437976901591" datatype="html">
         <source>Measurement </source>
@@ -21,6 +21,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/charts/charts-weather/charts-weather.component.html</context>
           <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2592368582911584624" datatype="html">
+        <source>Temperature</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/charts/charts-weather/charts-weather.component.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="815872510580912543" datatype="html">
+        <source>5-Day Weather Forecast</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/charts/charts-weather/charts-weather.component.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3077476812944622970" datatype="html">
+        <source>Temperature trends (°<x id="PH" equiv-text="this.unitMeasurement()"/>)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/charts/charts-weather/charts-weather.component.ts</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="187187500641108332" datatype="html">
@@ -51,15 +72,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/comparison/comparison.component.html</context>
-          <context context-type="linenumber">25,26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.html</context>
-          <context context-type="linenumber">54,55</context>
+          <context context-type="linenumber">59,60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">12,13</context>
+          <context context-type="linenumber">13,14</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/detail-city/detail-city.component.html</context>
@@ -129,11 +146,102 @@
           <context context-type="linenumber">2,3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5676855444993712377" datatype="html">
-        <source> button </source>
+      <trans-unit id="6371305219063483080" datatype="html">
+        <source>Dress warmly, frost is possible.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8270149334863845975" datatype="html">
+        <source>A coat or jacket will be just right.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5737456781143892530" datatype="html">
+        <source>Lightweight jacket or sweater</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8994527423213129120" datatype="html">
+        <source>It&apos;s hot, wear light clothes and drink more water.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6175258649843927365" datatype="html">
+        <source>Take an umbrella</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3753831164118157683" datatype="html">
+        <source>Dress warmly and wear winter shoes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1940452437616430695" datatype="html">
+        <source>Fog, be careful on the road</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="543887135254954816" datatype="html">
+        <source>It might be rain. Don&apos;t forget an umbrella</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8426646720539025840" datatype="html">
+        <source>Strong wind — be careful</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7795446041092089264" datatype="html">
+        <source>Good time for a walk, cycling, or outdoor activities.”</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1278053823063663123" datatype="html">
+        <source>It&apos;s very humid, maybe stuffy.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5225301889924760755" datatype="html">
+        <source>Comfortable air, good for being outside.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/forecast/recommendations/recommendations.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3323238995182336032" datatype="html">
+        <source>Type city...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/comparison/comparison.component.html</context>
-          <context context-type="linenumber">15,16</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4636762784794801915" datatype="html">
+        <source> add </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.html</context>
+          <context context-type="linenumber">16,17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
@@ -144,36 +252,99 @@
         <source> Compare wether </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/comparison/comparison.component.html</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="parameter.temp" datatype="html">
+        <source>temp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="parameter.humidity" datatype="html">
+        <source>humidity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="parameter.wind" datatype="html">
+        <source>wind</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="parameter.today" datatype="html">
+        <source>today</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="parameter.five" datatype="html">
+        <source>for five days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/comparison/comparison.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4248575180071101156" datatype="html">
+        <source>Type to search...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">7,8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1307095592258127150" datatype="html">
         <source> by country </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">24,25</context>
+          <context context-type="linenumber">25,26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">52,53</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1296132561767186430" datatype="html">
         <source> by population </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">35,36</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="748507054950054255" datatype="html">
         <source> by temperature </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">64,65</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8196164699488262604" datatype="html">
+        <source>My favorites cities</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6274183692997160974" datatype="html">
+        <source>Default city</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7469848785980434971" datatype="html">
+        <source>Popular cities</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">84,85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5403670477712648978" datatype="html">
-        <source>Current weather in <x id="INTERPOLATION" equiv-text="{{ weatherInfo()?.name }}"/></source>
+        <source>Current weather in <x id="INTERPOLATION" equiv-text="{{ weatherCity()?.name }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/detail-city/detail-city.component.html</context>
           <context context-type="linenumber">5,6</context>
@@ -187,7 +358,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8030354713312407045" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{ weatherInfo()?.humidity }}"/> %</source>
+        <source> <x id="INTERPOLATION" equiv-text="{{ weatherCity()?.main?.humidity }}"/> %</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/detail-city/detail-city.component.html</context>
           <context context-type="linenumber">20,22</context>
@@ -201,7 +372,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7708270344948043036" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{ weatherInfo()?.pressure }}"/> </source>
+        <source> <x id="INTERPOLATION" equiv-text="{{ weatherCity()?.main?.pressure }}"/> </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/detail-city/detail-city.component.html</context>
           <context context-type="linenumber">23,25</context>
@@ -215,7 +386,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3266218350783387838" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{ weatherInfo()?.wind?.speed }}"/> k/m</source>
+        <source> <x id="INTERPOLATION" equiv-text="{{ weatherCity()?.wind?.speed }}"/> k/m</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/detail-city/detail-city.component.html</context>
           <context context-type="linenumber">26,27</context>
@@ -298,6 +469,17 @@
           <context context-type="linenumber">97,98</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3301086086650990787" datatype="html">
+        <source>Register</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6028371114637047813" datatype="html">
         <source>First Name</source>
         <context-group purpose="location">
@@ -330,6 +512,17 @@
           <context context-type="linenumber">69,70</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <source>Log in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/register/register.component.html</context>
+          <context context-type="linenumber">99,100</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1126660423312101519" datatype="html">
         <source> Temperature measurement </source>
         <context-group purpose="location">
@@ -342,6 +535,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
           <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6794035170805907277" datatype="html">
+        <source> Change Language </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2821179408673282599" datatype="html">
@@ -377,20 +577,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
           <context context-type="linenumber">40,42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3301086086650990787" datatype="html">
-        <source>Register</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
-          <context context-type="linenumber">44,45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2336550011721758066" datatype="html">
-        <source>Log in</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
-          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
     </body>

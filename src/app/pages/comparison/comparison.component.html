@@ -3,6 +3,7 @@
     <div class="d-flex justify-content-between">
       <div class="input-group w-50">
         <input
+          i18n-placeholder
           class="form-control"
           placeholder="Type city..."
           [(ngModel)]="inputValue"
@@ -12,7 +13,7 @@
           class="btn btn-outline-primary"
           (click)="clickEventInputChoseCity()"
         >
-          button
+          add
         </button>
       </div>
       <div>
@@ -22,7 +23,9 @@
           [(ngModel)]="chosenRangeForecast"
         >
           @for (range of rangeForecast(); track $index) {
-          <option i18n [value]="range">{{ range }}</option>
+          <option i18n-value [value]="range.value">
+            {{ range.label }}
+          </option>
           }
         </select>
       </div>
@@ -33,7 +36,9 @@
           [(ngModel)]="chosenParameter"
         >
           @for (parameter of parameterSortForCharts(); track $index) {
-          <option [value]="parameter">{{ parameter }}</option>
+          <option i18n-value [value]="parameter.value">
+            {{ parameter.label }}
+          </option>
           }
         </select>
       </div>

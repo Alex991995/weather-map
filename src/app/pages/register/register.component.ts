@@ -1,6 +1,6 @@
 import { Component, inject, signal, DestroyRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
 import { ErrorResponse, IUserBody } from 'app/shared/interfaces';
 import { equalPasswords } from './helpers/equal-passwords';
@@ -8,7 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -61,7 +61,11 @@ export class RegisterComponent {
   });
 
   submitEvent() {
-    const isAdmin = this.form.value.email?.includes('admin') ? true : false;
+    const isAdmin = this.form.value.email
+      ?.toLocaleLowerCase()
+      ?.includes('admin')
+      ? true
+      : false;
     const valid = this.form.valid;
     if (valid) {
       const body: IUserBody = {

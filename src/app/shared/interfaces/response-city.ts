@@ -1,4 +1,4 @@
-export interface IResponseCityById {
+export interface IResponseCity {
   coord: Coord;
   weather: Weather[];
   base: string;

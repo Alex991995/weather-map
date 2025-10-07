@@ -1,13 +1,14 @@
 <section class="container-lg">
   <div class="box-input my-3 gap-4">
     <input
+      i18n-placeholder
       class="form-control d-inline w-25"
-      list="crypto"
+      list="cities"
       placeholder="Type to search..."
       [(ngModel)]="city"
       (change)="changeEventInput()"
     />
-    <datalist id="crypto">
+    <datalist id="cities">
       @for (city of cities(); track $index) {
       <option i18n [value]="city.name">{{ city.name }}</option>
       }
@@ -67,6 +68,7 @@
       <app-cards
         title="My favorites cities"
         typeCard="favorite"
+        i18n-title
         [weatherData]="arrayFavoriteCityUser()"
       />
     </div>
@@ -75,11 +77,13 @@
     <app-cards
       title="Default city"
       typeCard="default"
+      i18n-title
       [weatherData]="defaultCityOnDashboard()"
     />
     <app-cards
       title="Popular cities"
       typeCard="popular"
+      i18n-title
       [weatherData]="arrayPopularCityByAdmin()"
     />
   </div>

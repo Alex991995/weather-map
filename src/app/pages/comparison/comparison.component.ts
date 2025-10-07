@@ -40,13 +40,20 @@ export class ComparisonComponent {
   @ViewChild('chart') chart!: ChartComponent;
   protected chartOptions!: ChartOptions;
   protected inputValue = signal('');
-  protected parameterSortForCharts = signal<string[]>([
-    'temp',
-    'humidity',
-    'wind',
+  protected parameterSortForCharts = signal([
+    { value: 'temp', label: $localize`:@@parameter.temp:temp` },
+    { value: 'humidity', label: $localize`:@@parameter.humidity:humidity` },
+    { value: 'wind', label: $localize`:@@parameter.wind:wind` },
   ]);
   protected chosenParameter = signal<'temp' | 'humidity' | 'wind'>('temp');
-  protected rangeForecast = signal<string[]>(['today', 'for five days']);
+  protected rangeForecast = signal([
+    { value: 'today', label: $localize`:@@parameter.today:today` },
+    {
+      value: 'for five days',
+      label: $localize`:@@parameter.five:for five days`,
+    },
+  ]);
+
   protected chosenRangeForecast = signal<'today' | 'for five days'>('today');
   protected arrayChosenCities = signal<string[]>(['london', 'moscow', 'minsk']);
 

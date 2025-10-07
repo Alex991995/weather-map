@@ -2,13 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
   IForecastData,
-  IResponseCityById,
+  IResponseCity,
   IResponseIdsCityUser,
   IResponseUserData,
   IUserBody,
   IUserCreateResult,
   IUserLoginCredential,
-  IWeatherInfo,
 } from 'app/shared/interfaces';
 import { forkJoin } from 'rxjs';
 
@@ -27,7 +26,7 @@ export class ApiService {
 
   getSetOfCitiesForecast(arr: number[]) {
     const requests = arr.map((city) =>
-      this.http.get<IResponseCityById>(
+      this.http.get<IResponseCity>(
         `${this.weatherURL}/data/2.5/weather?id=${city}`
       )
     );
@@ -36,8 +35,8 @@ export class ApiService {
   }
 
   fetchByCityName(name: string) {
-    return this.http.get<IWeatherInfo[]>(
-      `${this.weatherURL}/data/3/find?q=${name}`
+    return this.http.get<IResponseCity>(
+      `${this.weatherURL}/data/2.5/weather?q=${name}`
     );
   }
 
@@ -65,7 +64,10 @@ export class ApiService {
   }
 
   loginUser(body: IUserLoginCredential) {
-    return this.http.post(`${this.authURL}/auth/login`, body);
+    return this.http.post<{ access_token: string }>(
+      `${this.authURL}/auth/login`,
+      body
+    );
   }
 
   getAllFavCityIDUser() {
@@ -107,6 +109,11 @@ export class ApiService {
 
   verifyToken() {
     return this.http.get(`${this.authURL}/auth/verify`, {
+      withCredentials: true,
+    });
+  }
+  logOut() {
+    return this.http.get(`${this.authURL}/auth/logout`, {
       withCredentials: true,
     });
   }

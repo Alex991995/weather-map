@@ -29,6 +29,12 @@ export class UserService {
     }
   }
 
+  checkIfAdminExist() {
+    return this.prismaService.client.user.findFirst({
+      where: { is_admin: true },
+    });
+  }
+
   async addFavoriteCity(userId: string, id_city: number) {
     try {
       const res = await this.prismaService.client.iDFavoriteCity.create({

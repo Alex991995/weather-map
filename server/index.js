@@ -12,11 +12,26 @@ server.use(express.static(rootDir));
 
 locales.forEach((locale) => {
   server.get(`/${locale}/*`, (req, res) => {
+    console.log(req)
     res.sendFile(
       path.resolve(rootDir, locale, 'index.html')
     );
   });
 });
+
+locales.forEach((locale) => {
+  server.get(`/${locale}/*`, (req, res) => {
+    console.log(req)
+    res.sendFile(
+      path.resolve(rootDir, locale, 'index.html')
+    );
+  });
+});
+
+
+
+
+
 
 server.get('/', (req, res) =>
   res.redirect(`/${defaultLocale}/`)

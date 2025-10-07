@@ -4,8 +4,6 @@ import { UserService } from './user.service.js';
 import { HttpError } from '@/errors/http-error.js';
 import { validateDTO } from '@/middlewares/validateDTO.middleware.js';
 import { CreateUserScheme } from './account-scheme/account-scheme.js';
-import { validateAdminOrUser } from '@/middlewares/validateAdminOrUser.middleware.js';
-import { validateAdmin } from '@/middlewares/validateAdmin.middleware.js';
 
 export class UserController {
   router: Router;
@@ -20,6 +18,10 @@ export class UserController {
       validateDTO(CreateUserScheme),
       async (req: Request<object, object, UserDTO>, res: Response, next: NextFunction) => {
         const body = req.body;
+        const ISAdminExist = await this.userService.checkIfAdminExist();
+        if (ISAdminExist && body.is_admin) {
+          next(new HttpError(422, 'Admin already exists'));
+        }
         const result = await this.userService.createUser(body);
         if (result) {
           res.send(result);
@@ -77,13 +79,6 @@ export class UserController {
     this.router.get('', async (req, res) => {
       const userId = req.user.id;
       const result = await this.userService.getUserByID(userId);
-
-      res.send(result);
-    });
-
-    this.router.get('/:id', validateAdminOrUser(), async (req, res) => {
-      const id = req.params.id;
-      const result = await this.userService.getUserByID(id);
 
       res.send(result);
     });

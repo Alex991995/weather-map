@@ -12,8 +12,7 @@ import { ConvertTempPipe } from 'app/shared/pipes/convert-temp.pipe';
 import {
   IForecastData,
   IForecastForCard,
-  IWeatherInfo,
-  Weather,
+  IResponseCity,
 } from 'app/shared/interfaces';
 import { ChartsWeatherComponent } from 'app/features/charts/charts-weather/charts-weather.component';
 import { CardsForecastComponent } from 'app/features/forecast/cards-forecast/cards-forecast.component';
@@ -35,8 +34,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class DetailCityComponent implements OnInit {
   private apiService = inject(ApiService);
   private destroyRef = inject(DestroyRef);
-  protected weatherInfo = signal<IWeatherInfo | undefined>(undefined);
-  protected weatherCity = signal<Weather | undefined>(undefined);
+  // protected weatherInfo = signal<IWeatherInfo | undefined>(undefined);
+  protected weatherCity = signal<IResponseCity | undefined>(undefined);
   protected slug = input('');
   protected iconWeather = signal('');
   isChosenAsFavorite = signal(false);
@@ -46,7 +45,7 @@ export class DetailCityComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      const icon = this.weatherCity()?.icon;
+      const icon = this.weatherCity()?.weather[0].icon;
       if (icon) {
         this.apiService.getIconWeather(icon).subscribe((buffer) => {
           const blob = new Blob([buffer], { type: 'image/png' });
@@ -55,15 +54,15 @@ export class DetailCityComponent implements OnInit {
           this.iconWeather.set(imgURL);
         });
       }
-      const weatherInfo = this.weatherInfo();
+      const weatherCity = this.weatherCity();
 
-      if (weatherInfo) {
+      if (weatherCity) {
         this.apiService
           .getAllFavCityIDUser()
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             const findFavCity = res.favoriteCities.find(
-              (c) => c.id_city === weatherInfo.id
+              (c) => c.id_city === weatherCity.id
             );
 
             this.isChosenAsFavorite.set(!!findFavCity);
@@ -83,9 +82,8 @@ export class DetailCityComponent implements OnInit {
   ngOnInit() {
     this.apiService.fetchByCityName(this.slug()).subscribe({
       next: (res) => {
-        const data = res[0];
-        this.weatherInfo.set(data);
-        this.weatherCity.set(data.weather[0]);
+        console.log(res);
+        this.weatherCity.set(res);
       },
     });
 

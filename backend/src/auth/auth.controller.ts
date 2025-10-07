@@ -20,6 +20,7 @@ export class AuthController {
       async ({ body }: Request<object, object, LoginDTO>, res: Response, next: NextFunction) => {
         const access_token = await this.authService.loginUser(body);
         if (access_token) {
+          // res.send({ access_token });
           res.cookie('access_token', access_token).send({ isAuthenticated: true });
           return;
         }
@@ -28,8 +29,19 @@ export class AuthController {
       },
     );
 
+    this.router.get('/logout', async (req, res, next) => {
+      res.clearCookie('access_token', {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+      res.status(200).json({ message: 'Logged out' });
+    });
+
     this.router.get('/verify', async (req, res, next) => {
       const token = req.token;
+      console.log(token);
       const payload = await this.authService.verifyToken(token);
       res.send(payload);
     });

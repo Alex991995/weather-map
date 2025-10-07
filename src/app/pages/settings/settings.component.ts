@@ -9,6 +9,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { ToggleThemeComponent } from '@components/toggle-theme/toggle-theme.component';
 import { ApiService } from '@core/services/api.service';
+import { LanguageService } from '@core/services/language.service';
 import { SelectTempService } from '@core/services/select-temp.service';
 
 @Component({
@@ -19,12 +20,29 @@ import { SelectTempService } from '@core/services/select-temp.service';
 })
 export class SettingsComponent {
   private selectTempService = inject(SelectTempService);
+  private languageService = inject(LanguageService);
   private destroyRef = inject(DestroyRef);
   protected defaultCity = signal('');
-  currentWether = signal('');
-
+  protected currentWether = signal('');
   protected arrayTempMeasure = this.selectTempService.arrayTempMeasure;
   public selectedValue = this.selectTempService.selectedTemp();
+
+  protected localList = signal([
+    { code: 'en', label: 'English' },
+    { code: 'ru', label: 'Русский' },
+  ]);
+  protected chosenLang = this.languageService.language;
+
+  // selectChangeLanguage(e: Event) {
+  //   const value = (e.target as HTMLInputElement).value as 'en' | 'ru';
+  //   console.log(value);
+  //   this.languageService.setLang(value);
+  // }
+
+  // e(langCode: string) {
+  //   const code = langCode as 'en' | 'ru';
+  //   this.languageService.setLang(code);
+  // }
 
   constructor(
     private apiService: ApiService,
@@ -32,24 +50,19 @@ export class SettingsComponent {
   ) {
     this.apiService.getUser().subscribe((res) => {
       this.defaultCity.set(res.defaultCityName);
-      console.log(res);
     });
   }
-
   changeEventSelector() {
     this.selectTempService.changeTemp(this.selectedValue);
   }
-
   clickEventInputDefaultCity() {
     const defaultCity = this.defaultCity();
     if (defaultCity) {
       this.apiService.setDefaultCity(defaultCity).subscribe((res) => {
         console.log(res);
       });
-
       this.apiService.fetchByCityName(defaultCity).subscribe((res) => {
-        const firstCity = res[0];
-        const currentWether = firstCity.weather[0].main;
+        const currentWether = res.weather[0].main;
         const weatherClass = this.getWeatherClass(currentWether);
         document.body.classList.remove(
           'weather-clear',
@@ -57,7 +70,6 @@ export class SettingsComponent {
           'weather-clouds',
           'weather-snow'
         );
-
         this.document.body.classList.add(weatherClass);
         this.currentWether.set(currentWether);
       });

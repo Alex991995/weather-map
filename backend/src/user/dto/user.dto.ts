@@ -3,7 +3,7 @@ export interface UserDTO {
   lastName: string;
   password: string;
   email: string;
-  role?: boolean;
+  is_admin: boolean;
 }
 
 export interface IidCity {

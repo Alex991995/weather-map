@@ -1,6 +1,6 @@
-import { IResponseCityById } from 'app/shared/interfaces';
+import { IResponseCity } from 'app/shared/interfaces';
 
-export function extractNecessaryFieldsForCards(data: IResponseCityById[]) {
+export function extractNecessaryFieldsForCards(data: IResponseCity[]) {
   return data.map((city) => {
     return {
       name: city.name,

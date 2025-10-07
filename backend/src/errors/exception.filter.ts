@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { HttpError } from './http-error.js';
-import { CustomZodError } from './zod-error.js';
 import * as z from 'zod/v4';
 
 export class ExceptionFilter {

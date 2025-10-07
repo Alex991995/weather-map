@@ -3,6 +3,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-header',
@@ -12,13 +13,12 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HeaderComponent {
   private authService = inject(AuthService);
-  private cookieService = inject(CookieService);
+  private apiService = inject(ApiService);
   private router = inject(Router);
   protected isAuthorized = this.authService.isAuthorized;
-  protected readonly image = '/assets/rainy.png';
 
   logOut() {
-    this.cookieService.delete('access_token');
+    this.apiService.logOut().subscribe();
     this.router.navigateByUrl('/login');
   }
 }
