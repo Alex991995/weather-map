@@ -1,4 +1,4 @@
-import { inject, Injectable, OnInit, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LOCALE_ID, Inject } from '@angular/core';
 
@@ -12,8 +12,4 @@ export class LanguageService {
   constructor(@Inject(LOCALE_ID) public locale: string) {
     this.language.set(this.locale);
   }
-
-  // setLang(format: 'en' | 'ru') {
-  //   this.language.set(format);
-  // }
 }

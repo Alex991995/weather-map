@@ -20,7 +20,7 @@ import { ThemeService } from '@core/services/theme.service';
 })
 export class ToggleThemeComponent {
   private themeService = inject(ThemeService);
-  currentTheme = this.themeService.theme;
+  protected currentTheme = this.themeService.theme;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.document.body.setAttribute(

@@ -34,25 +34,28 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class DetailCityComponent implements OnInit {
   private apiService = inject(ApiService);
   private destroyRef = inject(DestroyRef);
-  // protected weatherInfo = signal<IWeatherInfo | undefined>(undefined);
   protected weatherCity = signal<IResponseCity | undefined>(undefined);
   protected slug = input('');
   protected iconWeather = signal('');
-  isChosenAsFavorite = signal(false);
-
-  forecastFor5Days = signal<IForecastForCard[] | undefined>(undefined);
-  forecastData = signal<IForecastData | undefined>(undefined);
+  protected isChosenAsFavorite = signal(false);
+  protected forecastFor5Days = signal<IForecastForCard[] | undefined>(
+    undefined
+  );
+  protected forecastData = signal<IForecastData | undefined>(undefined);
 
   constructor() {
     effect(() => {
       const icon = this.weatherCity()?.weather[0].icon;
       if (icon) {
-        this.apiService.getIconWeather(icon).subscribe((buffer) => {
-          const blob = new Blob([buffer], { type: 'image/png' });
-          const imgURL = URL.createObjectURL(blob);
+        this.apiService
+          .getIconWeather(icon)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((buffer) => {
+            const blob = new Blob([buffer], { type: 'image/png' });
+            const imgURL = URL.createObjectURL(blob);
 
-          this.iconWeather.set(imgURL);
-        });
+            this.iconWeather.set(imgURL);
+          });
       }
       const weatherCity = this.weatherCity();
 
@@ -80,12 +83,14 @@ export class DetailCityComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.fetchByCityName(this.slug()).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.weatherCity.set(res);
-      },
-    });
+    this.apiService
+      .fetchByCityName(this.slug())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.weatherCity.set(res);
+        },
+      });
 
     this.apiService.fetchForecastCity(this.slug()).subscribe((res) => {
       if (res) {

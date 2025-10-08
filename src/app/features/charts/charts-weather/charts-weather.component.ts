@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   Component,
   effect,
   input,
   ViewChild,
   inject,
   signal,
-  computed,
 } from '@angular/core';
 import { ChartComponent } from 'ng-apexcharts';
 import { IForecastData } from 'app/shared/interfaces';
@@ -24,9 +22,9 @@ export class ChartsWeatherComponent {
   @ViewChild('chart') chart!: ChartComponent;
   private selectTempService = inject(SelectTempService);
   private unitMeasurement = this.selectTempService.selectedTemp;
-  forecastData = input<IForecastData | undefined>(undefined);
+  public forecastData = input<IForecastData | undefined>(undefined);
   protected chartOptions!: ChartOptions;
-  selectedValue = signal('temperature');
+  protected selectedValue = signal('temperature');
 
   constructor() {
     const today = new Date().toISOString().split('T')[0];

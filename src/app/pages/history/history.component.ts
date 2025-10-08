@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './history.component.scss',
 })
 export class HistoryComponent {
-  historyRequest = localStorage.getItem('history-request') || '[]';
-  data = JSON.parse(this.historyRequest);
+  private historyRequest = localStorage.getItem('history-request') || '[]';
+  protected data = JSON.parse(this.historyRequest);
 }

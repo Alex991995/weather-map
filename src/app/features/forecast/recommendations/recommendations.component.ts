@@ -1,5 +1,6 @@
 import { Component, effect, input, OnInit, signal } from '@angular/core';
 import { IResponseCity } from 'app/shared/interfaces';
+import { IRecommendations } from './model/recommendations';
 
 @Component({
   selector: 'app-recommendations',
@@ -8,13 +9,8 @@ import { IResponseCity } from 'app/shared/interfaces';
   styleUrl: './recommendations.component.scss',
 })
 export class RecommendationsComponent {
-  weatherCity = input<IResponseCity | undefined>(undefined);
-  recommendations = signal<{
-    temp: string;
-    condition: string;
-    wind: string;
-    humidity: string;
-  }>({
+  public weatherCity = input<IResponseCity | undefined>(undefined);
+  protected recommendations = signal<IRecommendations>({
     temp: '',
     condition: '',
     wind: '',
@@ -28,7 +24,7 @@ export class RecommendationsComponent {
         const condition = weatherCity.weather[0].main;
         const wind = weatherCity.wind.speed;
         const humidity = weatherCity.main.humidity;
-        const objNewRec = {
+        const objNewRec: IRecommendations = {
           temp: '',
           condition: '',
           wind: '',

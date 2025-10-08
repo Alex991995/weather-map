@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '@core/services/api.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header',
@@ -15,10 +16,14 @@ export class HeaderComponent {
   private authService = inject(AuthService);
   private apiService = inject(ApiService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   protected isAuthorized = this.authService.isAuthorized;
 
   logOut() {
-    this.apiService.logOut().subscribe();
+    this.apiService
+      .logOut()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
     this.router.navigateByUrl('/login');
   }
 }

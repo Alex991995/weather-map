@@ -75,7 +75,6 @@ export class RegisterComponent {
         email: this.form.value.email!,
         is_admin: isAdmin,
       };
-      console.log(body);
       this.apiService
         .createUser(body)
         .pipe(takeUntilDestroyed(this.destroyRef))

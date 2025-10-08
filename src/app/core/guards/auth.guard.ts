@@ -10,11 +10,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   return authService.isLoggedIn().pipe(
     map((isAuthorized) => {
       if (isAuthorized) {
-        console.log(isAuthorized);
         authService.setStatusAuthorization(true);
         return true;
       } else {
-        console.log(isAuthorized);
         authService.setStatusAuthorization(false);
         return new RedirectCommand(router.parseUrl('/login'));
       }

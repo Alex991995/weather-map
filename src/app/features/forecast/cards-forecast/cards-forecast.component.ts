@@ -10,5 +10,5 @@ import { ConvertTempPipe } from 'app/shared/pipes/convert-temp.pipe';
   styleUrl: './cards-forecast.component.scss',
 })
 export class CardsForecastComponent {
-  forecastFor5Days = input<IForecastForCard[] | undefined>(undefined);
+  public forecastFor5Days = input<IForecastForCard[] | undefined>(undefined);
 }

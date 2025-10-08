@@ -6,6 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ToggleThemeComponent } from '@components/toggle-theme/toggle-theme.component';
 import { ApiService } from '@core/services/api.service';
@@ -33,24 +34,16 @@ export class SettingsComponent {
   ]);
   protected chosenLang = this.languageService.language;
 
-  // selectChangeLanguage(e: Event) {
-  //   const value = (e.target as HTMLInputElement).value as 'en' | 'ru';
-  //   console.log(value);
-  //   this.languageService.setLang(value);
-  // }
-
-  // e(langCode: string) {
-  //   const code = langCode as 'en' | 'ru';
-  //   this.languageService.setLang(code);
-  // }
-
   constructor(
     private apiService: ApiService,
     @Inject(DOCUMENT) private document: Document
   ) {
-    this.apiService.getUser().subscribe((res) => {
-      this.defaultCity.set(res.defaultCityName);
-    });
+    this.apiService
+      .getUser()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.defaultCity.set(res.defaultCityName);
+      });
   }
   changeEventSelector() {
     this.selectTempService.changeTemp(this.selectedValue);
@@ -58,21 +51,27 @@ export class SettingsComponent {
   clickEventInputDefaultCity() {
     const defaultCity = this.defaultCity();
     if (defaultCity) {
-      this.apiService.setDefaultCity(defaultCity).subscribe((res) => {
-        console.log(res);
-      });
-      this.apiService.fetchByCityName(defaultCity).subscribe((res) => {
-        const currentWether = res.weather[0].main;
-        const weatherClass = this.getWeatherClass(currentWether);
-        document.body.classList.remove(
-          'weather-clear',
-          'weather-rain',
-          'weather-clouds',
-          'weather-snow'
-        );
-        this.document.body.classList.add(weatherClass);
-        this.currentWether.set(currentWether);
-      });
+      this.apiService
+        .setDefaultCity(defaultCity)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res) => {
+          console.log(res);
+        });
+      this.apiService
+        .fetchByCityName(defaultCity)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res) => {
+          const currentWether = res.weather[0].main;
+          const weatherClass = this.getWeatherClass(currentWether);
+          document.body.classList.remove(
+            'weather-clear',
+            'weather-rain',
+            'weather-clouds',
+            'weather-snow'
+          );
+          this.document.body.classList.add(weatherClass);
+          this.currentWether.set(currentWether);
+        });
     }
   }
   private getWeatherClass(weather: string): string {

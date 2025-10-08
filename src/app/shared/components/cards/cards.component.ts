@@ -10,8 +10,8 @@ import { TypeCardDirective } from 'app/shared/directive/type-card.directive';
   styleUrl: './cards.component.scss',
 })
 export class CardsComponent {
-  title = input.required();
-  typeCard = input.required<string>();
-  weatherData = input<IForecastCityForCards[]>([]);
-  arrayTypeCards = ['popular', 'default', 'favorite'];
+  public title = input.required();
+  public typeCard = input.required<string>();
+  public weatherData = input<IForecastCityForCards[]>([]);
+  protected arrayTypeCards = ['popular', 'default', 'favorite'];
 }

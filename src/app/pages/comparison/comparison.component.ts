@@ -1,31 +1,19 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { ApiService } from '@core/services/api.service';
 import { IForecastData } from 'app/shared/interfaces';
 import { ChartComponent } from 'ng-apexcharts';
-
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexYAxis,
-  ApexStroke,
-  ApexTitleSubtitle,
-} from 'ng-apexcharts';
 import { IDataForCharts } from './model/data-for-charts';
 import { SelectTempService } from '@core/services/select-temp.service';
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  yaxis?: ApexYAxis;
-  subtitle: ApexTitleSubtitle;
-};
+import { ChartOptions } from './model/chart';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-comparison',
@@ -36,6 +24,7 @@ export type ChartOptions = {
 export class ComparisonComponent {
   private apiService = inject(ApiService);
   private selectTempService = inject(SelectTempService);
+  private destroyRef = inject(DestroyRef);
   private unitMeasurement = this.selectTempService.selectedTemp;
   @ViewChild('chart') chart!: ChartComponent;
   protected chartOptions!: ChartOptions;
@@ -150,13 +139,16 @@ export class ComparisonComponent {
   clickEventCompareWether() {
     const chosenParameter = this.chosenParameter();
     const array = this.arrayChosenCities();
-    this.apiService.fetchByArrayCityName(array).subscribe((res) => {
-      if (this.chosenRangeForecast() === 'today') {
-        this.createTodayDataForecastForCharts(res, chosenParameter);
-      } else {
-        this.createFor5daysDataForecastForCharts(res, chosenParameter);
-      }
-    });
+    this.apiService
+      .fetchByArrayCityName(array)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        if (this.chosenRangeForecast() === 'today') {
+          this.createTodayDataForecastForCharts(res, chosenParameter);
+        } else {
+          this.createFor5daysDataForecastForCharts(res, chosenParameter);
+        }
+      });
   }
   get getTitleCharts() {
     const chosenParameter = this.chosenParameter();

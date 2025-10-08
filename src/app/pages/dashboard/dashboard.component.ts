@@ -12,7 +12,7 @@ import { arrayCities } from 'app/shared/constants';
 import { CardsComponent } from '@components/cards/cards.component';
 import { ApiService } from '@core/services/api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IForecastCityForCards, IResponseCity } from 'app/shared/interfaces';
+import { IForecastCityForCards } from 'app/shared/interfaces';
 import { extractNecessaryFieldsForCards } from './helper/extract-necessary-fields-for-cards';
 import { StoreLocallyHistoryReqService } from '@core/services/store-locally-history-req.service';
 
@@ -96,19 +96,22 @@ export class DashboardComponent implements OnInit {
       }
       const defaultCity = this.defaultCity();
       if (defaultCity) {
-        this.apiService.fetchByCityName(defaultCity).subscribe((res) => {
-          console.log(res);
-          const transformData: IForecastCityForCards = {
-            name: res.name,
-            icon: res.weather[0].icon,
-            temp: res.main.temp,
-            humidity: res.main.humidity,
-            pressure: res.main.pressure,
-            description: res.weather[0].description,
-            country: res.sys.country,
-          };
-          this.defaultCityOnDashboard.set([transformData]);
-        });
+        this.apiService
+          .fetchByCityName(defaultCity)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res) => {
+            console.log(res);
+            const transformData: IForecastCityForCards = {
+              name: res.name,
+              icon: res.weather[0].icon,
+              temp: res.main.temp,
+              humidity: res.main.humidity,
+              pressure: res.main.pressure,
+              description: res.weather[0].description,
+              country: res.sys.country,
+            };
+            this.defaultCityOnDashboard.set([transformData]);
+          });
       }
     });
   }
