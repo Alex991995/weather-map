@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
   protected errorMessage = signal('');
 
   ngOnInit(): void {
-    this.apiService.getUser().subscribe((res) => {
-      console.log(res);
-    });
+    // this.apiService.getUser().subscribe((res) => {
+    //   console.log(res);
+    // });
   }
 
   protected form = this._formBuilder.nonNullable.group({

@@ -80,7 +80,7 @@ export class RegisterComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           complete: () => {
-            this.router.navigateByUrl('/login');
+            this.router.navigateByUrl('/');
           },
           error: (err: ErrorResponse) => {
             this.form.setErrors({ message: err.error });

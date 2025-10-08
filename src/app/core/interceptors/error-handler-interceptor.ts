@@ -22,9 +22,10 @@ export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: unknown) => {
       if (error instanceof HttpErrorResponse) {
+        console.log(error);
         if (error.status === HttpErrorsApi.Forbidden) {
           authService.setStatusAuthorization(false);
-          toastService.showToast(error.statusText);
+          toastService.showToast(error.error);
         } else if (error.status === HttpErrorsApi.NotFound) {
           const customError = error.error as {
             cod: string;

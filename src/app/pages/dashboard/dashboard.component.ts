@@ -15,6 +15,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IForecastCityForCards } from 'app/shared/interfaces';
 import { extractNecessaryFieldsForCards } from './helper/extract-necessary-fields-for-cards';
 import { StoreLocallyHistoryReqService } from '@core/services/store-locally-history-req.service';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,6 @@ export class DashboardComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private storeLocallyHistoryReqService = inject(StoreLocallyHistoryReqService);
   private arrayIDsFavCityUser = signal<number[]>([]);
-  private arrayIDsPopularCityByAdmin = signal<number[]>([]);
   protected arrayFavoriteCityUser = signal<IForecastCityForCards[]>([]);
   protected arrayPopularCityByAdmin = signal<IForecastCityForCards[]>([]);
   protected defaultCityOnDashboard = signal<IForecastCityForCards[]>([]);
@@ -83,17 +83,6 @@ export class DashboardComponent implements OnInit {
             this.arrayFavoriteCityUser.set(transformData);
           });
       }
-
-      const arrayIDsPopularCityByAdmin = this.arrayIDsPopularCityByAdmin();
-      if (arrayIDsFavCityUser.length) {
-        this.apiService
-          .getSetOfCitiesForecast(arrayIDsPopularCityByAdmin)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((res) => {
-            const transformData = extractNecessaryFieldsForCards(res);
-            this.arrayPopularCityByAdmin.set(transformData);
-          });
-      }
       const defaultCity = this.defaultCity();
       if (defaultCity) {
         this.apiService
@@ -128,15 +117,24 @@ export class DashboardComponent implements OnInit {
 
     this.apiService
       .getPopularIDCityByAdmin()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap((res) => {
+          const arrIDs = res.favoriteCities.map((c) => c.id_city);
+          return this.apiService.getSetOfCitiesForecast(arrIDs);
+        })
+      )
       .subscribe((res) => {
-        const arrIDs = res.favoriteCities.map((c) => c.id_city);
-        this.arrayIDsPopularCityByAdmin.set(arrIDs);
+        const transformData = extractNecessaryFieldsForCards(res);
+        this.arrayPopularCityByAdmin.set(transformData);
       });
 
-    this.apiService.getUser().subscribe((res) => {
-      this.defaultCity.set(res.defaultCityName);
-    });
+    this.apiService
+      .getUser()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.defaultCity.set(res.defaultCityName);
+      });
   }
 
   changeEventInput() {

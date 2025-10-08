@@ -3,16 +3,17 @@ import { inject } from '@angular/core';
 import { LanguageService } from '@core/services/language.service';
 
 export function setAPIKey(req: HttpRequest<unknown>, next: HttpHandlerFn) {
+  const authURL = 'http://localhost:3000';
   const lang = inject(LanguageService).language();
   const params = new HttpParams()
     .set('appid', '072ddfcf932730e7863190ee2f0af0e0')
     .set('lang', lang);
 
-  const cloneReq = req.clone({ params });
+  const weatherApiRequest = req.clone({ params });
 
-  if (req.method === 'POST') {
+  if (req.url.startsWith(authURL)) {
     return next(req.clone({ withCredentials: true }));
   } else {
-    return next(cloneReq);
+    return next(weatherApiRequest);
   }
 }

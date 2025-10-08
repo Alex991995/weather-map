@@ -1,4 +1,5 @@
 <h3 i18n>{{ title() }}</h3>
+<ng-content />
 <div class="wrapper">
   @if(weatherData()) { @for (city of weatherData(); track $index) {
   <div [appTypeCard]="typeCard()" class="card mb-3 shadow-sm">

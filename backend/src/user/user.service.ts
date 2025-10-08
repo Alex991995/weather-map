@@ -1,39 +1,39 @@
 import { PrismaService } from '@/database/prisma.service.js';
-import { UserDTO } from './dto/user.dto.js';
-import bcrypt from 'bcryptjs';
-import { User } from '@/generated/prisma/client.js';
+// import { UserDTO } from './dto/user.dto.js';
+// import bcrypt from 'bcryptjs';
+// import { User } from '@/generated/prisma/client.js';
 
-const salt = process.env.SALT!;
+// const salt = process.env.SALT!;
 
 export class UserService {
   constructor(private prismaService: PrismaService) {}
 
-  async createUser(body: UserDTO) {
-    const hashedPassword = bcrypt.hashSync(body.password, +salt);
-    try {
-      const result = await this.prismaService.client.user.create({
-        data: { ...body, password: hashedPassword },
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          email: true,
-          is_admin: true,
-        },
-      });
+  // async createUser(body: UserDTO) {
+  //   const hashedPassword = bcrypt.hashSync(body.password, +salt);
+  //   try {
+  //     const result = await this.prismaService.client.user.create({
+  //       data: { ...body, password: hashedPassword },
+  //       select: {
+  //         id: true,
+  //         firstName: true,
+  //         lastName: true,
+  //         email: true,
+  //         is_admin: true,
+  //       },
+  //     });
 
-      return result;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
+  //     return result;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return false;
+  //   }
+  // }
 
-  checkIfAdminExist() {
-    return this.prismaService.client.user.findFirst({
-      where: { is_admin: true },
-    });
-  }
+  // checkIfAdminExist() {
+  //   return this.prismaService.client.user.findFirst({
+  //     where: { is_admin: true },
+  //   });
+  // }
 
   async addFavoriteCity(userId: string, id_city: number) {
     try {
@@ -68,7 +68,6 @@ export class UserService {
       where: { is_admin: true },
       select: {
         favoriteCities: true,
-        is_admin: true,
       },
     });
   }

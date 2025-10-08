@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
+  IFavoriteCities,
   IForecastData,
   IResponseCity,
   IResponseIdsCityUser,
@@ -58,7 +59,7 @@ export class ApiService {
 
   createUser(body: IUserBody) {
     return this.http.post<IUserCreateResult>(
-      `${this.authURL}/user/create`,
+      `${this.authURL}/auth/create`,
       body
     );
   }
@@ -71,18 +72,13 @@ export class ApiService {
   }
 
   getAllFavCityIDUser() {
-    return this.http.get<IResponseIdsCityUser>(
-      `${this.authURL}/user/favorite`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.get<IResponseIdsCityUser>(`${this.authURL}/user/favorite`);
   }
 
   getPopularIDCityByAdmin() {
-    return this.http.get<IResponseIdsCityUser>(`${this.authURL}/user/popular`, {
-      withCredentials: true,
-    });
+    return this.http.get<{ favoriteCities: IFavoriteCities[] }>(
+      `${this.authURL}/user/popular`
+    );
   }
 
   setDefaultCity(defaultCityName: string) {
@@ -102,19 +98,13 @@ export class ApiService {
   }
 
   getUser() {
-    return this.http.get<IResponseUserData>(`${this.authURL}/user`, {
-      withCredentials: true,
-    });
+    return this.http.get<IResponseUserData>(`${this.authURL}/user`);
   }
 
   verifyToken() {
-    return this.http.get(`${this.authURL}/auth/verify`, {
-      withCredentials: true,
-    });
+    return this.http.get(`${this.authURL}/auth/verify`);
   }
   logOut() {
-    return this.http.get(`${this.authURL}/auth/logout`, {
-      withCredentials: true,
-    });
+    return this.http.get(`${this.authURL}/auth/logout`);
   }
 }

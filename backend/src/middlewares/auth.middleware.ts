@@ -8,7 +8,7 @@ export class AuthMiddleware {
   async execute(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.access_token as string | undefined;
     const route = req.originalUrl;
-
+    console.log(route);
     if (token) {
       try {
         const payload = await this.authService.verifyToken(token);
@@ -23,7 +23,7 @@ export class AuthMiddleware {
         next(new HttpError(401, 'invalid token'));
       }
     } else {
-      if (route === '/user/create' || route === '/auth/login' || route === '/auth/verify') {
+      if (route.startsWith('/auth') && route !== '/auth/verify') {
         return next();
       } else {
         next(new HttpError(403, 'forbidden access'));
