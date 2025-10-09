@@ -15,12 +15,16 @@
         </select>
       </div>
 
-      <div class="input-group">
-        <input
-          class="form-control"
-          placeholder="Type city..."
-          [(ngModel)]="defaultCity"
-        />
+      <div class="input-group align-items-end">
+        <div>
+          <label i18n for="city">Default city</label>
+          <input
+            class="form-control"
+            id="city"
+            placeholder="Type city..."
+            [(ngModel)]="defaultCity"
+          />
+        </div>
         <button
           i18n
           class="btn btn-outline-primary"
@@ -30,17 +34,18 @@
         </button>
       </div>
       <div>
-        <div class="d-flex gap-3">
-          @for (lang of localList(); track $index) {
-          <p>
-            <a
-              href="/{{ lang.code }}/settings"
-              class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-              >{{ lang.label }}</a
-            >
-          </p>
-
-          }
+        <div>
+          <label i18n class="text-nowrap" for="lang">Choose language</label>
+          <select
+            id="lang"
+            class="form-select w-auto"
+            [(ngModel)]="chosenLang"
+            (change)="changeLanguageSelector()"
+          >
+            @for (lang of localList(); track $index) {
+            <option i18n [value]="lang.code">{{ lang.label }}</option>
+            }
+          </select>
         </div>
       </div>
     </div>

@@ -89,7 +89,6 @@ export class DashboardComponent implements OnInit {
           .fetchByCityName(defaultCity)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
-            console.log(res);
             const transformData: IForecastCityForCards = {
               name: res.name,
               icon: res.weather[0].icon,
@@ -98,6 +97,7 @@ export class DashboardComponent implements OnInit {
               pressure: res.main.pressure,
               description: res.weather[0].description,
               country: res.sys.country,
+              currentWether: res.weather[0].main,
             };
             this.defaultCityOnDashboard.set([transformData]);
           });
@@ -147,22 +147,28 @@ export class DashboardComponent implements OnInit {
 
   onCheckboxCountryChange() {
     const stateCheckbox = this.isCountryChecked();
-    this.isCountryChecked.set(!stateCheckbox);
 
     this.cities.update((prevCities) => {
       const copyCities = [...prevCities];
+      if (stateCheckbox) {
+        return copyCities.sort((a, b) =>
+          a.country.localeCompare(b.country, undefined)
+        );
+      }
       return copyCities.sort((a, b) =>
-        a.country.localeCompare(b.country, undefined, { sensitivity: 'base' })
+        b.country.localeCompare(a.country, undefined)
       );
     });
   }
   onCheckboxPopulationChange() {
     const stateCheckbox = this.isPopulationChecked();
-    this.isPopulationChecked.set(!stateCheckbox);
 
     this.cities.update((prevCities) => {
       const copyCities = [...prevCities];
-      return copyCities.sort((a, b) => b.population - a.population);
+      if (stateCheckbox) {
+        return copyCities.sort((a, b) => b.population - a.population);
+      }
+      return copyCities.sort((a, b) => a.population - b.population);
     });
   }
 }

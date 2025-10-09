@@ -24,6 +24,7 @@ export class HeaderComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
     this.isAuthorized.set(false);
+    localStorage.removeItem('history-request');
     this.router.navigateByUrl('/login');
   }
 }

@@ -4,17 +4,37 @@ import { Directive, ElementRef, Input, input, OnInit } from '@angular/core';
   selector: 'div[appTypeCard]',
 })
 export class TypeCardDirective implements OnInit {
-  public appTypeCard = input.required<string>();
+  public typeCard = input.required<string>();
+  public currentWeather = input<string>();
   constructor(private el: ElementRef<HTMLDivElement>) {}
 
   ngOnInit() {
-    const typeCard = this.appTypeCard();
+    const typeCard = this.typeCard();
     if (typeCard === 'popular') {
       this.el.nativeElement.classList.add('text-bg-primary');
     } else if (typeCard === 'favorite') {
       this.el.nativeElement.classList.add('text-bg-info');
     } else {
-      this.el.nativeElement.classList.add('text-bg-warning');
+      const currentWether = this.currentWeather();
+      if (currentWether) {
+        const weatherClass = this.getWeatherClass(currentWether);
+        this.el.nativeElement.classList.add(weatherClass);
+      }
+    }
+  }
+
+  private getWeatherClass(weather: string): string {
+    switch (weather) {
+      case 'Rain':
+        return 'weather-rain';
+      case 'Clear':
+        return 'weather-clear';
+      case 'Snow':
+        return 'weather-snow';
+      case 'Clouds':
+        return 'weather-clouds';
+      default:
+        return 'weather-clear';
     }
   }
 }

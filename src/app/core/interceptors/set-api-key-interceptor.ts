@@ -1,8 +1,10 @@
 import { HttpHandlerFn, HttpParams, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LanguageService } from '@core/services/language.service';
+import { environment } from 'environments/environment';
 
 export function setAPIKey(req: HttpRequest<unknown>, next: HttpHandlerFn) {
+  const appid = environment.apiKey;
   const authURL = 'http://localhost:3000';
   const lang = inject(LanguageService).language();
   const params = new HttpParams()

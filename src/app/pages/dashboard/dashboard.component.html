@@ -15,6 +15,7 @@
     </datalist>
     <div>
       <div class="form-check">
+        <label i18n class="form-check-label" for="country"> by country </label>
         <input
           class="form-check-input"
           type="checkbox"
@@ -22,9 +23,11 @@
           [(ngModel)]="isCountryChecked"
           (change)="onCheckboxCountryChange()"
         />
-        <label i18n class="form-check-label" for="country"> by country </label>
       </div>
       <div class="form-check">
+        <label i18n class="form-check-label" for="population">
+          by population
+        </label>
         <input
           class="form-check-input"
           type="checkbox"
@@ -32,9 +35,6 @@
           [(ngModel)]="isPopulationChecked"
           (change)="onCheckboxPopulationChange()"
         />
-        <label i18n class="form-check-label" for="population">
-          by population
-        </label>
       </div>
     </div>
   </div>

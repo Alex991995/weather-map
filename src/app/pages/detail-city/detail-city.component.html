@@ -4,7 +4,7 @@
       <div class="d-flex align-items-center">
         <h3 i18n>Current weather in {{ weatherCity()?.name }}</h3>
         <img [src]="iconWeather()" alt="" />
-        <h3 i18n>{{ weatherCity()!.weather[0].description }}</h3>
+        <h3 i18n>{{ weatherCity()?.weather?.[0]?.description }}</h3>
       </div>
       <div>
         <i

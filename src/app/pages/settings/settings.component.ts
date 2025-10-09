@@ -48,44 +48,22 @@ export class SettingsComponent {
   changeEventSelector() {
     this.selectTempService.changeTemp(this.selectedValue);
   }
+  changeLanguageSelector() {
+    const lang = this.chosenLang();
+    window.location.href = `/${lang}/settings`;
+  }
+
   clickEventInputDefaultCity() {
     const defaultCity = this.defaultCity();
     if (defaultCity) {
       this.apiService
         .setDefaultCity(defaultCity)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((res) => {
-          console.log(res);
-        });
+        .subscribe();
       this.apiService
         .fetchByCityName(defaultCity)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((res) => {
-          const currentWether = res.weather[0].main;
-          const weatherClass = this.getWeatherClass(currentWether);
-          document.body.classList.remove(
-            'weather-clear',
-            'weather-rain',
-            'weather-clouds',
-            'weather-snow'
-          );
-          this.document.body.classList.add(weatherClass);
-          this.currentWether.set(currentWether);
-        });
-    }
-  }
-  private getWeatherClass(weather: string): string {
-    switch (weather) {
-      case 'Rain':
-        return 'weather-rain';
-      case 'Clear':
-        return 'weather-clear';
-      case 'Snow':
-        return 'weather-snow';
-      case 'Clouds':
-        return 'weather-clouds';
-      default:
-        return 'weather-clear';
+        .subscribe();
     }
   }
 }

@@ -6,4 +6,5 @@ export interface IForecastCityForCards {
   pressure: number;
   description: string;
   country: string;
+  currentWether?: string;
 }

@@ -2,7 +2,12 @@
 <ng-content />
 <div class="wrapper">
   @if(weatherData()) { @for (city of weatherData(); track $index) {
-  <div [appTypeCard]="typeCard()" class="card mb-3 shadow-sm">
+  <div
+    appTypeCard
+    [typeCard]="typeCard()"
+    [currentWeather]="city.currentWether"
+    class="card mb-3 shadow-sm"
+  >
     <div class="card-body text-center">
       <h5 i18n class="card-title">{{ city.name }}</h5>
       <img
