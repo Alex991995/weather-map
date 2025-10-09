@@ -1,5 +1,10 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { SelectTempService } from '@core/services/select-temp.service';
+import {
+  KELVIN_OFFSET,
+  FAHRENHEIT_MULTIPLIER,
+  FAHRENHEIT_OFFSET,
+} from '../constants';
 
 @Pipe({
   name: 'convertTemp',
@@ -7,16 +12,17 @@ import { SelectTempService } from '@core/services/select-temp.service';
 export class ConvertTempPipe implements PipeTransform {
   private selectTempService = inject(SelectTempService);
   private unitTemp = this.selectTempService.selectedTemp;
-  transform(value: number | undefined, ...args: unknown[]) {
-    if (!value) return null;
+
+  transform(kelvin: number | undefined, ...args: unknown[]) {
+    if (!kelvin) return null;
 
     if (this.unitTemp() === 'C') {
-      const res = value - 273.15;
-      return `${Math.floor(res)}°C`;
+      const celsius = kelvin - KELVIN_OFFSET;
+      return `${Math.floor(celsius)}°C`;
     } else {
-      let a = value - 273.15;
-      let res = a * 1.8 + 32;
-      return `${Math.floor(res)}°F`;
+      const celsius = kelvin - KELVIN_OFFSET;
+      const fahrenheit = celsius * FAHRENHEIT_MULTIPLIER + FAHRENHEIT_OFFSET;
+      return `${Math.floor(fahrenheit)}°F`;
     }
   }
 }

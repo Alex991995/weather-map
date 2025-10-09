@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { authURL, weatherURL } from 'app/shared/constants';
 import {
   IFavoriteCities,
   IForecastData,
@@ -16,8 +17,8 @@ import { forkJoin } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private weatherURL = 'https://api.openweathermap.org';
-  private authURL = 'http://localhost:3000';
+  private readonly weatherURL = weatherURL;
+  private readonly authURL = authURL;
   private http = inject(HttpClient);
 
   getIconWeather(icon: string) {

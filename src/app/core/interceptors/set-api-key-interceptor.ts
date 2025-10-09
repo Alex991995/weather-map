@@ -1,15 +1,13 @@
 import { HttpHandlerFn, HttpParams, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LanguageService } from '@core/services/language.service';
+import { authURL } from 'app/shared/constants';
 import { environment } from 'environments/environment';
 
 export function setAPIKey(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const appid = environment.apiKey;
-  const authURL = 'http://localhost:3000';
   const lang = inject(LanguageService).language();
-  const params = new HttpParams()
-    .set('appid', '072ddfcf932730e7863190ee2f0af0e0')
-    .set('lang', lang);
+  const params = new HttpParams().set('appid', appid).set('lang', lang);
 
   const weatherApiRequest = req.clone({ params });
 
