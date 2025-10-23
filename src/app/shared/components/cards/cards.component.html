@@ -1,0 +1,25 @@
+<h3 i18n>{{ title() }}</h3>
+<ng-content />
+<div class="wrapper">
+  @if(weatherData()) { @for (city of weatherData(); track $index) {
+  <div
+    appTypeCard
+    [typeCard]="typeCard()"
+    [currentWeather]="city.currentWether"
+    class="card mb-3 shadow-sm"
+  >
+    <div class="card-body text-center">
+      <h5 i18n class="card-title">{{ city.name }}</h5>
+      <img
+        [src]="'https://openweathermap.org/img/wn/' + city.icon + '@2x.png'"
+        alt="Weather icon"
+      />
+      <p i18n class="card-text">{{ city.temp | convertTemp }}</p>
+      <p i18n>💧 Humidity: {{ city.humidity }}%</p>
+      <p i18n>Pressure: {{ city.pressure }} hPa</p>
+
+      <p i18n class="text-muted">{{ city.description }}</p>
+    </div>
+  </div>
+  } }
+</div>

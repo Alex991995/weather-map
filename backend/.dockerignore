@@ -1,0 +1,29 @@
+# Development artifacts
+node_modules
+.git/
+.vscode/
+*.log
+
+coverage/
+.idea/
+*.md
+
+# Environment files
+.env*
+!.env.example
+docker-compose.yml
+dist
+# Build files
+**/*.tsbuildinfo
+
+# Prisma
+/prisma/migrations
+/prisma/*.db
+
+# OS metadata
+.DS_Store
+
+.gitignore
+.git/
+
+Dockerfile

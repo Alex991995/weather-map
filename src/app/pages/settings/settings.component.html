@@ -1,0 +1,54 @@
+<section class="container">
+  <div class="d-flex justify-content-between mt-4">
+    <div class="d-flex justify-content-between align-items-end gap-4">
+      <div>
+        <label i18n for="temp"> Temperature measurement </label>
+        <select
+          id="temp"
+          class="form-select"
+          [(ngModel)]="selectedValue"
+          (change)="changeEventSelector()"
+        >
+          @for (temp of arrayTempMeasure(); track $index) {
+          <option i18n [value]="temp">&deg;{{ temp }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="input-group align-items-end">
+        <div>
+          <label i18n for="city">Default city</label>
+          <input
+            class="form-control"
+            id="city"
+            placeholder="Type city..."
+            [(ngModel)]="defaultCity"
+          />
+        </div>
+        <button
+          i18n
+          class="btn btn-outline-primary"
+          (click)="clickEventInputDefaultCity()"
+        >
+          add
+        </button>
+      </div>
+      <div>
+        <div>
+          <label i18n class="text-nowrap" for="lang">Choose language</label>
+          <select
+            id="lang"
+            class="form-select w-auto"
+            [(ngModel)]="chosenLang"
+            (change)="changeLanguageSelector()"
+          >
+            @for (lang of localList(); track $index) {
+            <option i18n [value]="lang.code">{{ lang.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+    <app-toggle-theme />
+  </div>
+</section>

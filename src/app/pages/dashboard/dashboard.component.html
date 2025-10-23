@@ -1,0 +1,90 @@
+<section class="container-lg">
+  <div class="box-input my-3 gap-4">
+    <input
+      i18n-placeholder
+      class="form-control d-inline w-25"
+      list="cities"
+      placeholder="Type to search..."
+      [(ngModel)]="city"
+      (change)="changeEventInput()"
+    />
+    <datalist id="cities">
+      @for (city of cities(); track $index) {
+      <option i18n [value]="city.name">{{ city.name }}</option>
+      }
+    </datalist>
+    <div>
+      <div class="form-check">
+        <label i18n class="form-check-label" for="country"> by country </label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="country"
+          [(ngModel)]="isCountryChecked"
+          (change)="onCheckboxCountryChange()"
+        />
+      </div>
+      <div class="form-check">
+        <label i18n class="form-check-label" for="population">
+          by population
+        </label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="population"
+          [(ngModel)]="isPopulationChecked"
+          (change)="onCheckboxPopulationChange()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="ddd">
+    @if(!is_admin()){
+    <div>
+      <app-cards
+        title="My favorites cities"
+        typeCard="favorite"
+        i18n-title
+        [weatherData]="arrayFavoriteCityUser()"
+        ><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="favorite-country"
+            [(ngModel)]="isFavoriteCountryChecked"
+            (change)="onCheckboxFavoriteCountry()"
+          />
+          <label i18n class="form-check-label" for="favorite-country">
+            by country
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="temperature"
+            [(ngModel)]="isHottestCountryChecked"
+            (change)="onCheckboxHottestCountry()"
+          />
+          <label i18n class="form-check-label" for="temperature">
+            by temperature
+          </label>
+        </div></app-cards
+      >
+    </div>
+
+    }
+    <app-cards
+      title="Default city"
+      typeCard="default"
+      i18n-title
+      [weatherData]="defaultCityOnDashboard()"
+    />
+    <app-cards
+      title="Popular cities"
+      typeCard="popular"
+      i18n-title
+      [weatherData]="arrayPopularCityByAdmin()"
+    />
+  </div>
+</section>

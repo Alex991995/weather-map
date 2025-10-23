@@ -1,0 +1,84 @@
+<section class="container">
+  <div class="d-flex flex-column gap-4">
+    <div class="d-flex justify-content-between">
+      <div class="input-group w-50">
+        <input
+          i18n-placeholder
+          class="form-control"
+          placeholder="Type city..."
+          [(ngModel)]="inputValue"
+        />
+        <button
+          i18n
+          class="btn btn-outline-primary"
+          (click)="clickEventInputChoseCity()"
+        >
+          add
+        </button>
+      </div>
+      <div>
+        <select
+          id="range"
+          class="form-select"
+          [(ngModel)]="chosenRangeForecast"
+        >
+          @for (range of rangeForecast(); track $index) {
+          <option i18n-value [value]="range.value">
+            {{ range.label }}
+          </option>
+          }
+        </select>
+      </div>
+      <div>
+        <select
+          id="parameter"
+          class="form-select"
+          [(ngModel)]="chosenParameter"
+        >
+          @for (parameter of parameterSortForCharts(); track $index) {
+          <option i18n-value [value]="parameter.value">
+            {{ parameter.label }}
+          </option>
+          }
+        </select>
+      </div>
+      <button
+        i18n
+        (click)="clickEventCompareWether()"
+        class="btn btn-outline-secondary"
+      >
+        Compare wether
+      </button>
+    </div>
+
+    <div>
+      @if(arrayChosenCities().length){
+      <ul class="p-0">
+        @for (city of arrayChosenCities(); track $index) {
+        <li class="d-flex gap-2">
+          <h5 i18n>{{ city }}</h5>
+          <button
+            (click)="deleteFromChosenCities($index)"
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+          ></button>
+        </li>
+        }
+      </ul>
+      }
+    </div>
+  </div>
+
+  <div #chart>
+    @if(chartOptions){
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [subtitle]="chartOptions.subtitle"
+    ></apx-chart>
+    }
+  </div>
+</section>

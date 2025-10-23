@@ -1,0 +1,9 @@
+<section class="container">
+  <ul class="list-group w-25">
+    @for (c of data; track $index) {
+    <li i18n class="text-success list-group-item">
+      {{ c.city }} <small class="text-info">{{ c.date }}</small>
+    </li>
+    }
+  </ul>
+</section>

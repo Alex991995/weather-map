@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+        - path: package.json
+          action: rebuild
+
+        - action: sync
+          path: ./src
+          target: /usr/src/app/src
+          ignore:
+          - node_modules/
+          
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - prisma-network
+    env_file:
+      - .env
+    command: npm run dev
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=prisma
+    ports:
+      - '5432:5432'
+    networks:
+      - prisma-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c listen_addresses='*'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  
+
+networks:
+  prisma-network:
+    name: prisma-network
+
+volumes:
+  postgres_data:
+    

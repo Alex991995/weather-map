@@ -1,0 +1,108 @@
+<section
+  class="container h-100 d-flex flex-column justify-content-center flex-wrap align-content-center"
+>
+  <div class="w-50">
+    <form
+      [formGroup]="form"
+      (submit)="submitEvent()"
+      class="d-flex flex-column"
+    >
+      <div class="mb-3">
+        <label i18n for="email" class="form-label">Email address</label>
+        <input
+          formControlName="email"
+          type="email"
+          class="form-control"
+          id="email"
+        />
+        <div i18n id="email" class="form-text error-message text-danger">
+          @if(isValidEmail){invalid email}
+        </div>
+      </div>
+      <div class="mb-3">
+        <label i18n for="firstName" class="form-label">First Name</label>
+        <input
+          i18n
+          formControlName="firstName"
+          type="name"
+          class="form-control"
+          id="firstName"
+          aria-describedby="firstName"
+        />
+
+        <div i18n id="name" class="form-text error-message text-danger">
+          @if(isValidFirstName){should be more than one symbol}
+        </div>
+      </div>
+      <div class="mb-3">
+        <label i18n for="lastName" class="form-label">Last Name</label>
+        <input
+          i18n
+          formControlName="lastName"
+          type="name"
+          class="form-control"
+          id="lastName"
+          aria-describedby="lastName"
+        />
+
+        <div i18n id="name" class="form-text error-message text-danger">
+          @if(isValidLastName){should be more than one symbol}
+        </div>
+      </div>
+      <div formGroupName="passwords">
+        <div class="mb-3">
+          <label i18n for="password" class="form-label">Password</label>
+          <input
+            i18n
+            formControlName="password"
+            type="password"
+            class="form-control"
+            id="password"
+            aria-describedby="password"
+          />
+
+          <div i18n id="name" class="form-text error-message text-danger">
+            @if(isValidPassword){should be equal}
+          </div>
+        </div>
+        <div class="mb-3">
+          <label i18n for="password" class="form-label">Repeat Password</label>
+          <input
+            i18n
+            formControlName="repeatPassword"
+            type="password"
+            class="form-control"
+            id="repeatPassword"
+            aria-describedby="repeatPassword"
+          />
+
+          <div i18n id="name" class="form-text error-message text-danger">
+            @if(isValidRepeatPassword){should be equal}
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+        <a
+          role="button"
+          [routerLink]="['/login']"
+          class="btn btn-light"
+          i18n="@@login"
+          >Log in</a
+        >
+        <button
+          i18n
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isDisable"
+        >
+          Submit
+        </button>
+      </div>
+      <div i18n class="form-text error-message text-danger">
+        @if(errorMessage()){
+        {{ errorMessage() }}
+        }
+      </div>
+    </form>
+  </div>
+</section>
