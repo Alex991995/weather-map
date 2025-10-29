@@ -17,7 +17,9 @@ docker compose -f docker-compose.yml up --build
 
 docker compose exec app npx prisma migrate dev --name init
 
-4. enter into server folder and run
+4. api_key for openweathermap 072ddfcf932730e7863190ee2f0af0e0
+
+5. enter into server folder and run
    node index
 
-5. go to the http://localhost:4200
+6. go to the http://localhost:4200

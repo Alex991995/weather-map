@@ -61,11 +61,10 @@ export class RegisterComponent {
   });
 
   submitEvent() {
-    const isAdmin = this.form.value.email
+    const isAdmin = !!this.form.value.email
       ?.toLocaleLowerCase()
-      ?.includes('admin')
-      ? true
-      : false;
+      ?.includes('admin');
+
     const valid = this.form.valid;
     if (valid) {
       const body: IUserBody = {
